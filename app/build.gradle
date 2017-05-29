@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply from:'../config/quality.gradle'
+apply from: '../config/quality.gradle'
 apply plugin: 'spoon'
 
 
@@ -18,6 +18,30 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // engine: implementation of the game engine
+    flavorDimensions 'engine'
+
+    productFlavors {
+
+        // game engine completely mock
+        mock {
+            dimension 'engine'
+            applicationIdSuffix 'mock'
+        }
+
+        // game engine currently used for children.
+        kid {
+            dimension 'engine'
+        }
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (names.contains("mock") && variant.buildType.name == "release") {
+            variant.ignore = true
         }
     }
 }

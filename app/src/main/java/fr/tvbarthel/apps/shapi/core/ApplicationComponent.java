@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import fr.tvbarthel.apps.shapi.MainActivity;
+import fr.tvbarthel.apps.shapi.engine.EngineModule;
 
 /**
  * Component whose lifetime is going to be the lifetime of the application.
@@ -11,7 +12,8 @@ import fr.tvbarthel.apps.shapi.MainActivity;
 
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
 @Component(modules = {
-        ApplicationModule.class
+        ApplicationModule.class,
+        EngineModule.class
 })
 public interface ApplicationComponent {
 
