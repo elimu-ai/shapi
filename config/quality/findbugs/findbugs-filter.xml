@@ -15,4 +15,8 @@
         </Not>
     </Match>
 
+    <Match>
+        <Class name="fr.tvbarthel.apps.shapi.core.ShapiApplication" />
+    </Match>
+
 </FindBugsFilter>
