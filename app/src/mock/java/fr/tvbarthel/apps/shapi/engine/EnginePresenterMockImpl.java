@@ -1,6 +1,8 @@
 package fr.tvbarthel.apps.shapi.engine;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
@@ -14,6 +16,8 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 public class EnginePresenterMockImpl implements GameContract.Presenter {
 
     private final ArrayList<Shape> shapes;
+    private final ArrayList<DropZone> dropZones;
+    private final Random random;
 
     private GameContract.View view;
     private boolean playing;
@@ -26,6 +30,18 @@ public class EnginePresenterMockImpl implements GameContract.Presenter {
      */
     public EnginePresenterMockImpl() {
         shapes = new ArrayList<>();
+        shapes.add(new Rectangle());
+        shapes.add(new Triangle());
+        shapes.add(new Circle());
+        shapes.add(new Diamond());
+
+        dropZones = new ArrayList<>();
+        dropZones.add(new DropZone(Rectangle.class));
+        dropZones.add(new DropZone(Triangle.class));
+        dropZones.add(new DropZone(Circle.class));
+        dropZones.add(new DropZone(Diamond.class));
+
+        random = new Random(System.currentTimeMillis());
     }
 
     @Override
@@ -52,22 +68,34 @@ public class EnginePresenterMockImpl implements GameContract.Presenter {
 
     @Override
     public void computeScore(DropZone zone, Shape shape) {
-        boolean correct = !shapes.isEmpty();
+        boolean correct = zone.getShape().isInstance(shape);
         updateScore(correct);
         generateNextShape(correct, shape);
         updateGameView();
     }
 
     private void initializeGame() {
-        shapes.add(new Rectangle());
-        shapes.add(new Triangle());
-        shapes.add(new Circle());
-        shapes.add(new Diamond());
+        initializeShapes();
+        initializeDropZones();
+        initializeScore();
+        currentPlayedShape = shapes.get(random.nextInt(4));
 
+    }
+
+    private void initializeScore() {
         rightAnswer = 0;
         wrongAnswer = 0;
+    }
 
-        currentPlayedShape = shapes.remove(0);
+    private void initializeShapes() {
+        Collections.shuffle(shapes);
+    }
+
+    private void initializeDropZones() {
+        Collections.shuffle(dropZones);
+        if (view != null) {
+            view.displayDropZones(dropZones.toArray(new DropZone[dropZones.size()]));
+        }
     }
 
     private void updateGameView() {
@@ -79,7 +107,7 @@ public class EnginePresenterMockImpl implements GameContract.Presenter {
 
     private void generateNextShape(boolean correct, Shape shape) {
         if (correct) {
-            currentPlayedShape = shapes.remove(0);
+            currentPlayedShape = shapes.get(random.nextInt(4));
         } else {
             currentPlayedShape = shape;
         }

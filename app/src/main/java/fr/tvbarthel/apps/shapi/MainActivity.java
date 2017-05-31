@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Size;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -26,9 +27,16 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
      */
     @Inject
     protected GameContract.Presenter gamePresenter;
+
     private TextView score;
     private TextView shape;
+    private Button dropZone1;
+    private Button dropZone2;
+    private Button dropZone3;
+    private Button dropZone4;
+
     private Shape playedShape;
+    private DropZone[] dropZones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,16 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
 
         score = ((TextView) findViewById(R.id.activity_main_score));
         shape = ((TextView) findViewById(R.id.activity_main_shape));
-        findViewById(R.id.activity_main_play).setOnClickListener(this);
+
+        dropZone1 = ((Button) findViewById(R.id.activity_main_drop_zone_1));
+        dropZone2 = ((Button) findViewById(R.id.activity_main_drop_zone_2));
+        dropZone3 = ((Button) findViewById(R.id.activity_main_drop_zone_3));
+        dropZone4 = ((Button) findViewById(R.id.activity_main_drop_zone_4));
+
+        dropZone1.setOnClickListener(this);
+        dropZone2.setOnClickListener(this);
+        dropZone3.setOnClickListener(this);
+        dropZone4.setOnClickListener(this);
 
         ShapiApplication.component().inject(this);
         gamePresenter.attachView(this);
@@ -68,17 +85,37 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
 
     @Override
     public void displayDropZones(@Size(4) DropZone[] zones) {
-
+        dropZones = zones;
+        dropZone1.setText(zones[0].getShapeName());
+        dropZone2.setText(zones[1].getShapeName());
+        dropZone3.setText(zones[2].getShapeName());
+        dropZone4.setText(zones[3].getShapeName());
     }
 
     @Override
     public void displayShape(Shape shape) {
         playedShape = shape;
-        this.shape.setText(shape.toString());
+        this.shape.setText(shape.getClass().getSimpleName());
     }
 
     @Override
     public void onClick(View v) {
-        gamePresenter.computeScore(null, playedShape);
+        switch (v.getId()) {
+            case R.id.activity_main_drop_zone_1:
+                gamePresenter.computeScore(dropZones[0], playedShape);
+                break;
+            case R.id.activity_main_drop_zone_2:
+                gamePresenter.computeScore(dropZones[1], playedShape);
+                break;
+            case R.id.activity_main_drop_zone_3:
+                gamePresenter.computeScore(dropZones[2], playedShape);
+                break;
+            case R.id.activity_main_drop_zone_4:
+                gamePresenter.computeScore(dropZones[3], playedShape);
+                break;
+            default:
+                throw new IllegalStateException("Click not handled: " + v);
+
+        }
     }
 }
