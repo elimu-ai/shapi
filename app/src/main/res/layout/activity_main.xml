@@ -25,9 +25,27 @@
         android:layout_gravity="center" />
 
     <Button
-        android:id="@+id/activity_main_play"
+        android:id="@+id/activity_main_drop_zone_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/play"/>
+        android:text="@string/play" />
+
+    <Button
+        android:id="@+id/activity_main_drop_zone_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play" />
+
+    <Button
+        android:id="@+id/activity_main_drop_zone_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play" />
+
+    <Button
+        android:id="@+id/activity_main_drop_zone_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play" />
 
 </LinearLayout>
