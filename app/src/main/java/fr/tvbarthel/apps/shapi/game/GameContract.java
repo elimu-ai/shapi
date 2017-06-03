@@ -58,15 +58,6 @@ public interface GameContract {
          * @param shape shape dropped by the user.
          */
         void computeScore(DropZone zone, Shape shape);
-
-        /**
-         * Called when the user want to drag a {@link Shape} on the game field.
-         *
-         * @param view          view currently displaying the {@link Shape}.
-         * @param shadowBuilder view to display during the drag motion.
-         * @param shape         shape to drag.
-         */
-        void startDrag(android.view.View view, android.view.View.DragShadowBuilder shadowBuilder, Shape shape);
     }
 
     /**

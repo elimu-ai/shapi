@@ -1,12 +1,9 @@
 package fr.tvbarthel.apps.shapi.game;
 
-import android.view.View;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import fr.tvbarthel.apps.shapi.game.drag.DragManager;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
@@ -21,7 +18,6 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
     private final ArrayList<Shape> shapes;
     private final ArrayList<DropZone> dropZones;
     private final Random random;
-    private final DragManager dragManager;
 
     private GameContract.View view;
     private boolean playing;
@@ -31,12 +27,8 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
 
     /**
      * Implementation completely mocked.
-     *
-     * @param dragManager manager used to perform drag motion.
      */
-    EnginePresenterMockImpl(DragManager dragManager) {
-        this.dragManager = dragManager;
-
+    EnginePresenterMockImpl() {
         shapes = new ArrayList<>();
         shapes.add(new Rectangle());
         shapes.add(new Triangle());
@@ -80,11 +72,6 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
         updateScore(correct);
         generateNextShape(correct, shape);
         updateGameView();
-    }
-
-    @Override
-    public void startDrag(View view, View.DragShadowBuilder shadowBuilder, Shape shape) {
-        dragManager.startDrag(view, shadowBuilder, shape);
     }
 
     private void initializeGame() {
