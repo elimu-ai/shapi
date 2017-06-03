@@ -1,2 +1,2 @@
 @javax.annotation.ParametersAreNonnullByDefault
-package fr.tvbarthel.apps.shapi.engine;
+package fr.tvbarthel.apps.shapi.game;

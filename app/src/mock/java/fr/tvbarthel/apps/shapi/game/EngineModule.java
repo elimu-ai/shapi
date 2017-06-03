@@ -1,4 +1,4 @@
-package fr.tvbarthel.apps.shapi.engine;
+package fr.tvbarthel.apps.shapi.game;
 
 import javax.inject.Singleton;
 
@@ -12,7 +12,7 @@ import dagger.Provides;
 public class EngineModule {
 
     /**
-     * Provide an implementation of the {@link fr.tvbarthel.apps.shapi.engine.GameContract.Presenter}
+     * Provide an implementation of the {@link fr.tvbarthel.apps.shapi.game.GameContract.Presenter}
      *
      * @return implementation.
      */

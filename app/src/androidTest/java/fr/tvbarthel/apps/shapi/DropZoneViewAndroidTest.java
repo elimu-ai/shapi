@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import fr.tvbarthel.apps.shapi.engine.DropZone;
+import fr.tvbarthel.apps.shapi.game.DropZoneView;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
@@ -20,22 +21,22 @@ import fr.tvbarthel.apps.shapi.shape.TestActivity;
 import fr.tvbarthel.apps.shapi.shape.Triangle;
 
 /**
- * Android test for the class {@link DropZoneBoxView}
+ * Android test for the class {@link DropZoneView}
  */
 @RunWith(AndroidJUnit4.class)
-public class DropZoneBoxViewAndroidTest {
+public class DropZoneViewAndroidTest {
 
     @Rule
     public ActivityTestRule<TestActivity> activityRule = new ActivityTestRule<>(TestActivity.class);
     private Instrumentation instrumentation;
-    private DropZoneBoxView dropZoneBoxView;
+    private DropZoneView dropZoneView;
 
     @Before
     public void setup() {
         instrumentation = InstrumentationRegistry.getInstrumentation();
         setContentView();
         final TestActivity activity = activityRule.getActivity();
-        dropZoneBoxView = ((DropZoneBoxView) activity.findViewById(R.id.test_drop_zone_box_view));
+        dropZoneView = ((DropZoneView) activity.findViewById(R.id.test_drop_zone_box_view));
     }
 
     @Test
@@ -83,7 +84,7 @@ public class DropZoneBoxViewAndroidTest {
         instrumentation.runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                dropZoneBoxView.setDropZone(dropZone);
+                dropZoneView.setDropZone(dropZone);
             }
         });
     }
