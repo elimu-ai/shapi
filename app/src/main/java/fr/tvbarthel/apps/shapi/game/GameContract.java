@@ -39,7 +39,7 @@ public interface GameContract {
          * <p>
          * See also:
          * {@link View#displayDropZones(DropZone[])}
-         * {@link View#displayShape(Shape)}
+         * {@link View#displayShape(Shape, boolean)}
          */
         void start();
 
@@ -58,6 +58,15 @@ public interface GameContract {
          * @param shape shape dropped by the user.
          */
         void computeScore(DropZone zone, Shape shape);
+
+        /**
+         * Called when the user want to drag a {@link Shape} on the game field.
+         *
+         * @param view          view currently displaying the {@link Shape}.
+         * @param shadowBuilder view to display during the drag motion.
+         * @param shape         shape to drag.
+         */
+        void startDrag(android.view.View view, android.view.View.DragShadowBuilder shadowBuilder, Shape shape);
     }
 
     /**
@@ -84,7 +93,8 @@ public interface GameContract {
          * Called when a new shape has just spawned and must be displayed to the user.
          *
          * @param shape new spawned shape to display.
+         * @param shown true if the shape must be shown to the user, false if the shape must be hidden.
          */
-        void displayShape(Shape shape);
+        void displayShape(Shape shape, boolean shown);
     }
 }

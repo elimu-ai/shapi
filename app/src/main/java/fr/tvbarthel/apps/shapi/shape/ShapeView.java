@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import fr.tvbarthel.apps.shapi.R;
@@ -22,6 +23,7 @@ public class ShapeView extends View {
     private Paint backgroundPaint;
     private Paint borderPaint;
     private Shape shape;
+    private Listener listener;
 
     /**
      * A {@link View} responsible of drawing a {@link Shape}
@@ -80,6 +82,24 @@ public class ShapeView extends View {
         invalidate();
     }
 
+    /**
+     * {@link Shape} currently displayed inside the given view.
+     *
+     * @return shape currently displayed.
+     */
+    public Shape getShape() {
+        return shape;
+    }
+
+    /**
+     * Listener used to catch view events.
+     *
+     * @param listener listener used to catch view events.
+     */
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -101,6 +121,8 @@ public class ShapeView extends View {
     }
 
     private void init(Context context) {
+        initTouchListener();
+
         shapeRect = new RectF();
 
         backgroundPaint = new Paint();
@@ -113,5 +135,41 @@ public class ShapeView extends View {
         borderPaint.setStrokeWidth(context.getResources().getDimension(R.dimen.shape_stroke_width));
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setAntiAlias(true);
+    }
+
+    private void initTouchListener() {
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    requestDragMotion();
+                }
+                return false;
+            }
+        });
+    }
+
+    private void requestDragMotion() {
+        if (listener != null) {
+            listener.onStartDragMotionRequested(
+                    ShapeView.this,
+                    new DragShadowBuilder(ShapeView.this)
+            );
+        }
+    }
+
+    /**
+     * Listener used to catch view events.
+     */
+    public interface Listener {
+
+        /**
+         * Called when the user wants to start a drag motion on the given {@link ShapeView}
+         *
+         * @param shapeView     view the user wants to start dragging.
+         * @param shadowBuilder shadow builder used during the drag motion.
+         */
+        void onStartDragMotionRequested(ShapeView shapeView, DragShadowBuilder shadowBuilder);
+
     }
 }
