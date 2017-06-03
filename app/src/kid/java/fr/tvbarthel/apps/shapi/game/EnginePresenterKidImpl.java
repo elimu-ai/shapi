@@ -3,6 +3,7 @@ package fr.tvbarthel.apps.shapi.game;
 import android.support.annotation.Size;
 import android.view.View;
 
+import fr.tvbarthel.apps.shapi.game.drag.DragManager;
 import fr.tvbarthel.apps.shapi.shape.Shape;
 
 /**

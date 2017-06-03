@@ -5,6 +5,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.tvbarthel.apps.shapi.game.drag.DragListener;
+import fr.tvbarthel.apps.shapi.game.drag.DragManager;
 import fr.tvbarthel.apps.shapi.shape.Shape;
 
 /**
