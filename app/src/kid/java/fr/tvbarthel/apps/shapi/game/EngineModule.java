@@ -11,7 +11,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import fr.tvbarthel.apps.shapi.audioeffect.AudioEffectEngine;
-import fr.tvbarthel.apps.shapi.game.drag.DragManager;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
@@ -37,8 +36,7 @@ public class EngineModule {
     @Provides
     @Singleton
     GameContract.Presenter provideGamePresenter(GameEngine gameEngine,
-                                                @NonNull List<Class<? extends Shape>> shapes,
-                                                @NonNull DragManager dragManager) {
+                                                @NonNull List<Class<? extends Shape>> shapes) {
 
         List<DropZone> dropZones = new ArrayList<>();
         for (Class<? extends Shape> shape : shapes) {
@@ -48,22 +46,13 @@ public class EngineModule {
 
         return new EnginePresenterKidImpl(
                 gameEngine,
-                dropZones.toArray(new DropZone[dropZones.size()]),
-                dragManager
+                dropZones.toArray(new DropZone[dropZones.size()])
         );
     }
 
     @Provides
-    DropZoneContract.Presenter provideDropZonePresenter(@NonNull DragManager dragManager,
-                                                        @NonNull List<Class<? extends Shape>> shapes) {
-        return new DropZonePresenterKidImpl(dragManager, shapes);
-    }
-
-    @Singleton
-    @Provides
-    @NonNull
-    DragManager provideDragManager() {
-        return DragManager.getInstance();
+    DropZoneContract.Presenter provideDropZonePresenter(@NonNull List<Class<? extends Shape>> shapes) {
+        return new DropZonePresenterKidImpl(shapes);
     }
 
     @Provides

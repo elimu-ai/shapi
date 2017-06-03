@@ -1,20 +1,18 @@
-package fr.tvbarthel.apps.shapi.game.drag;
+package fr.tvbarthel.apps.shapi.ui.drag;
 
-import android.annotation.TargetApi;
 import android.content.ClipData;
-import android.os.Build;
 import android.view.View;
 
 /**
- * Used to start a drag on a {@link View} on post Nougat devices.
+ * Used to start a drag on a {@link View} on pre Nougat devices.
  */
-@TargetApi(Build.VERSION_CODES.N)
-final class DragStarterPostNougatImpl {
+@SuppressWarnings("deprecation")
+final class DragStarterPreNougatImpl {
 
     /**
      * Non instantiable class.
      */
-    private DragStarterPostNougatImpl() {
+    private DragStarterPreNougatImpl() {
 
     }
 
@@ -28,6 +26,6 @@ final class DragStarterPostNougatImpl {
      * @param i        flags.
      */
     public static void startDrag(View source, ClipData clipData, View.DragShadowBuilder shadow, int token, int i) {
-        source.startDragAndDrop(clipData, shadow, token, i);
+        source.startDrag(clipData, shadow, token, i);
     }
 }

@@ -5,9 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -19,6 +22,8 @@ import fr.tvbarthel.apps.shapi.shape.Rectangle;
 import fr.tvbarthel.apps.shapi.shape.Shape;
 import fr.tvbarthel.apps.shapi.shape.ShapeView;
 import fr.tvbarthel.apps.shapi.shape.Triangle;
+import fr.tvbarthel.apps.shapi.ui.drag.DragHelper;
+import fr.tvbarthel.apps.shapi.ui.drag.DragListener;
 
 /**
  * A {@link android.view.View} representing a {@link DropZone}.
@@ -44,6 +49,8 @@ public class DropZoneView extends FrameLayout {
     private Listener listener;
     private DropZone dropZone;
     private Interpolator scaleInterpolator;
+    private DragHelper dragHelper;
+    private DragListener dragListener;
 
     /**
      * Create a {@link DropZoneView}
@@ -82,14 +89,12 @@ public class DropZoneView extends FrameLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         presenter.attachView(internalView);
-        presenter.registerDragListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         presenter.detachView(internalView);
-        presenter.unregisterDragListener(this);
     }
 
     /**
@@ -127,6 +132,30 @@ public class DropZoneView extends FrameLayout {
         }
     }
 
+    private void onDragExited() {
+        animateScale(1.0f);
+    }
+
+    private void onDragEntered() {
+        animateScale(1.2f);
+    }
+
+    private void onShapeDropped(Shape data) {
+        animateScale(1.0f);
+        if (listener != null) {
+            listener.onShapeDropped(dropZone, data);
+        }
+    }
+
+    private void animateScale(float scaleFactor) {
+        DropZoneView.this.animate()
+                .scaleX(scaleFactor)
+                .scaleY(scaleFactor)
+                .setDuration(SCALE_ANIMATION_DURATION)
+                .setInterpolator(scaleInterpolator)
+                .start();
+    }
+
     /**
      * Initialize internal component.
      *
@@ -137,25 +166,44 @@ public class DropZoneView extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.view_drop_zone_box, this);
         ShapiApplication.component().inject(this);
 
-        scaleInterpolator = new OvershootInterpolator();
         shapeView = ((ShapeView) findViewById(R.id.view_drop_zone_box_internal_shape));
 
-        internalView = new DropZoneContract.View() {
+        scaleInterpolator = new OvershootInterpolator();
+        dragHelper = DragHelper.getInstance();
+
+        initializeInternalListeners();
+    }
+
+    private void initializeInternalListeners() {
+        dragListener = new DragListener() {
             @Override
-            public void displayShapeDropped(Shape shape) {
-                if (listener != null) {
-                    listener.onShapeDropped(dropZone, shape);
-                }
+            protected void onDragDropped(View source, Object data) {
+                super.onDragDropped(source, data);
+                DropZoneView.this.onShapeDropped((Shape) data);
             }
 
             @Override
-            public void scale(float scaleFactor) {
-                DropZoneView.this.animate()
-                        .scaleX(scaleFactor)
-                        .scaleY(scaleFactor)
-                        .setDuration(SCALE_ANIMATION_DURATION)
-                        .setInterpolator(scaleInterpolator)
-                        .start();
+            protected void onDragEntered(View source, Object data) {
+                super.onDragEntered(source, data);
+                DropZoneView.this.onDragEntered();
+            }
+
+            @Override
+            protected void onDragExited(View source, Object data) {
+                super.onDragExited(source, data);
+                DropZoneView.this.onDragExited();
+            }
+        };
+
+        internalView = new DropZoneContract.View() {
+            @Override
+            public void registerDragListener(ArrayList<Class<?>> availableShapes) {
+                dragHelper.register(DropZoneView.this, dragListener, availableShapes);
+            }
+
+            @Override
+            public void unRegisterDragListener() {
+                DropZoneView.this.setOnDragListener(null);
             }
         };
     }

@@ -24,7 +24,7 @@ import fr.tvbarthel.apps.shapi.shape.ShapeView;
  * https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
  */
 public class MainActivity extends AppCompatActivity
-        implements GameContract.View, DropZoneView.Listener, ShapeView.Listener {
+        implements GameContract.View, DropZoneView.Listener {
 
     /**
      * Dummy injection example.
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity
 
         score = ((TextView) findViewById(R.id.activity_main_score));
         shapeView = ((ShapeView) findViewById(R.id.activity_main_shape));
-        shapeView.setListener(this);
 
         dropZone1 = ((DropZoneView) findViewById(R.id.activity_main_drop_zone_1));
         dropZone2 = ((DropZoneView) findViewById(R.id.activity_main_drop_zone_2));
@@ -108,11 +107,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onShapeDropped(@NonNull DropZone dropZone, @Nullable Shape shape) {
         gamePresenter.computeScore(dropZone, playedShape);
-    }
-
-    @Override
-    public void onStartDragMotionRequested(ShapeView shapeView, View.DragShadowBuilder shadowBuilder) {
-        gamePresenter.startDrag(shapeView, shadowBuilder, shapeView.getShape());
     }
 
     private void hideShape(Shape shape) {

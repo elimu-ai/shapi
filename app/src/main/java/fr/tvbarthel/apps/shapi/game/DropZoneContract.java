@@ -1,6 +1,6 @@
 package fr.tvbarthel.apps.shapi.game;
 
-import fr.tvbarthel.apps.shapi.shape.Shape;
+import java.util.ArrayList;
 
 /**
  * Define the common contract of area used to drop {@link fr.tvbarthel.apps.shapi.shape.Shape}
@@ -31,20 +31,6 @@ interface DropZoneContract {
          * @param view view from which the presenter is detached.
          */
         void detachView(View view);
-
-        /**
-         * Must register a drag listener which accept all kinds of {@link Shape}.
-         *
-         * @param view view on which the drag listener must be registered.
-         */
-        void registerDragListener(android.view.View view);
-
-        /**
-         * Must unregister a drag listener.
-         *
-         * @param view view for which the drag listener must be un registered.
-         */
-        void unregisterDragListener(android.view.View view);
     }
 
     /**
@@ -53,18 +39,16 @@ interface DropZoneContract {
     interface View {
 
         /**
-         * Called when a shaped has been dropped inside the drop zone.
+         * Called when the view must register a drag listener in order to catch drag event from
+         * every available shapes.
          *
-         * @param shape dropped zone.
+         * @param availableShapes shapes available in the game.
          */
-        void displayShapeDropped(Shape shape);
+        void registerDragListener(ArrayList<Class<?>> availableShapes);
 
         /**
-         * Scale this {@link View}.
-         *
-         * @param scaleFactor the scale factor.
+         * Called when the view must stop listening for drag events.
          */
-        void scale(float scaleFactor);
-
+        void unRegisterDragListener();
     }
 }

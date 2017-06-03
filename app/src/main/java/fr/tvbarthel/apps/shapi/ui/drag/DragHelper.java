@@ -1,4 +1,4 @@
-package fr.tvbarthel.apps.shapi.game.drag;
+package fr.tvbarthel.apps.shapi.ui.drag;
 
 import android.content.ClipData;
 import android.os.Build;
@@ -10,24 +10,24 @@ import java.util.HashMap;
 /**
  * Manager drag motion.
  */
-public final class DragManager {
+public final class DragHelper {
 
-    private static DragManager sInstance;
+    private static DragHelper sInstance;
 
     private HashMap<Integer, DragData> mDraggedItems;
 
-    private DragManager() {
+    private DragHelper() {
         mDraggedItems = new HashMap<>();
     }
 
     /**
-     * Drag motion manager instance.
+     * Drag motion helper instance.
      *
      * @return drag manager.
      */
-    public static DragManager getInstance() {
+    public static DragHelper getInstance() {
         if (sInstance == null) {
-            sInstance = new DragManager();
+            sInstance = new DragHelper();
         }
         return sInstance;
     }
@@ -73,7 +73,7 @@ public final class DragManager {
      */
     static DragData getDraggedItem(int token) {
         if (sInstance == null) {
-            sInstance = new DragManager();
+            sInstance = new DragHelper();
         }
         return sInstance.mDraggedItems.get(token);
     }
@@ -85,7 +85,7 @@ public final class DragManager {
      */
     static void clearDraggedItem(int token) {
         if (sInstance == null) {
-            sInstance = new DragManager();
+            sInstance = new DragHelper();
         }
         sInstance.mDraggedItems.remove(token);
     }

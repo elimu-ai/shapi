@@ -9,7 +9,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import fr.tvbarthel.apps.shapi.game.drag.DragManager;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
@@ -29,21 +28,13 @@ public class EngineModule {
      */
     @Provides
     @Singleton
-    GameContract.Presenter provideGamePresenter(@NonNull DragManager dragManager) {
-        return new EnginePresenterMockImpl(dragManager);
+    GameContract.Presenter provideGamePresenter() {
+        return new EnginePresenterMockImpl();
     }
 
     @Provides
-    DropZoneContract.Presenter provideDropZonePresenter(@NonNull DragManager dragManager,
-                                                        @NonNull List<Class<? extends Shape>> shapes) {
-        return new DropZonePresenterMockImpl(dragManager, shapes);
-    }
-
-    @Singleton
-    @Provides
-    @NonNull
-    DragManager provideDragManager() {
-        return DragManager.getInstance();
+    DropZoneContract.Presenter provideDropZonePresenter(@NonNull List<Class<? extends Shape>> shapes) {
+        return new DropZonePresenterMockImpl(shapes);
     }
 
     @Provides

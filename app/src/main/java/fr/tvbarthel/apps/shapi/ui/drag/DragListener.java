@@ -1,4 +1,4 @@
-package fr.tvbarthel.apps.shapi.game.drag;
+package fr.tvbarthel.apps.shapi.ui.drag;
 
 import android.content.ClipDescription;
 import android.view.DragEvent;
@@ -134,7 +134,7 @@ public class DragListener {
                         if (mDraggedItem == null && mHandledClassNames.contains(className)) {
 
                             // retrieve the data object linked to the dragged event.
-                            mDraggedItem = DragManager.getDraggedItem(((Integer) event.getLocalState()));
+                            mDraggedItem = DragHelper.getDraggedItem(((Integer) event.getLocalState()));
                             onDragStarted(mDraggedItem.getSource(), mDraggedItem.getData());
 
                             return true;
@@ -157,7 +157,7 @@ public class DragListener {
                     case DragEvent.ACTION_DRAG_ENDED:
                         if (mDraggedItem != null) {
                             onDragEnded(mDraggedItem.getSource(), mDraggedItem.getData());
-                            DragManager.clearDraggedItem(mDraggedItem.getToken());
+                            DragHelper.clearDraggedItem(mDraggedItem.getToken());
                             mDraggedItem = null;
                         }
                         break;

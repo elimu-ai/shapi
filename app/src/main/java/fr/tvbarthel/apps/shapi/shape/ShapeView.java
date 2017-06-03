@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import fr.tvbarthel.apps.shapi.R;
+import fr.tvbarthel.apps.shapi.ui.drag.DragHelper;
 
 /**
  * A {@link View} responsible of drawing a {@link Shape}
@@ -23,7 +24,7 @@ public class ShapeView extends View {
     private Paint backgroundPaint;
     private Paint borderPaint;
     private Shape shape;
-    private Listener listener;
+    private DragHelper dragHelper;
 
     /**
      * A {@link View} responsible of drawing a {@link Shape}
@@ -91,15 +92,6 @@ public class ShapeView extends View {
         return shape;
     }
 
-    /**
-     * Listener used to catch view events.
-     *
-     * @param listener listener used to catch view events.
-     */
-    public void setListener(Listener listener) {
-        this.listener = listener;
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -122,6 +114,7 @@ public class ShapeView extends View {
 
     private void init(Context context) {
         initTouchListener();
+        dragHelper = DragHelper.getInstance();
 
         shapeRect = new RectF();
 
@@ -142,34 +135,14 @@ public class ShapeView extends View {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    requestDragMotion();
+                    startDragMotion();
                 }
                 return false;
             }
         });
     }
 
-    private void requestDragMotion() {
-        if (listener != null) {
-            listener.onStartDragMotionRequested(
-                    ShapeView.this,
-                    new DragShadowBuilder(ShapeView.this)
-            );
-        }
-    }
-
-    /**
-     * Listener used to catch view events.
-     */
-    public interface Listener {
-
-        /**
-         * Called when the user wants to start a drag motion on the given {@link ShapeView}
-         *
-         * @param shapeView     view the user wants to start dragging.
-         * @param shadowBuilder shadow builder used during the drag motion.
-         */
-        void onStartDragMotionRequested(ShapeView shapeView, DragShadowBuilder shadowBuilder);
-
+    private void startDragMotion() {
+        dragHelper.startDrag(ShapeView.this, new DragShadowBuilder(ShapeView.this), shape);
     }
 }
