@@ -3,13 +3,15 @@ package fr.tvbarthel.apps.shapi.shape;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
+import fr.tvbarthel.apps.shapi.R;
 
 /**
  * A {@link View} responsible of drawing a {@link Shape}
@@ -17,7 +19,8 @@ import android.view.View;
 public class ShapeView extends View {
 
     private RectF shapeRect;
-    private Paint paint;
+    private Paint backgroundPaint;
+    private Paint borderPaint;
     private Shape shape;
 
     /**
@@ -27,7 +30,7 @@ public class ShapeView extends View {
      */
     public ShapeView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     /**
@@ -38,7 +41,7 @@ public class ShapeView extends View {
      */
     public ShapeView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     /**
@@ -50,7 +53,7 @@ public class ShapeView extends View {
      */
     public ShapeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
     /**
@@ -64,7 +67,7 @@ public class ShapeView extends View {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ShapeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        init(context);
     }
 
     /**
@@ -81,7 +84,7 @@ public class ShapeView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (shape != null) {
-            shape.draw(canvas, shapeRect, paint);
+            shape.draw(canvas, shapeRect, backgroundPaint, borderPaint);
         }
     }
 
@@ -97,12 +100,18 @@ public class ShapeView extends View {
         shapeRect.set(shapeLeft, shapeTop, shapeRight, shareBottom);
     }
 
-    private void init() {
+    private void init(Context context) {
         shapeRect = new RectF();
 
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setAntiAlias(true);
+        backgroundPaint = new Paint();
+        backgroundPaint.setColor(ContextCompat.getColor(context, R.color.shapeBackgroundColor));
+        backgroundPaint.setStyle(Paint.Style.FILL);
+        backgroundPaint.setAntiAlias(true);
+
+        borderPaint = new Paint();
+        borderPaint.setColor(ContextCompat.getColor(context, R.color.shapeBorderColor));
+        borderPaint.setStrokeWidth(context.getResources().getDimension(R.dimen.shape_stroke_width));
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setAntiAlias(true);
     }
 }

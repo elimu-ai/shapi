@@ -12,9 +12,10 @@ public interface Shape {
     /**
      * Draw this {@link Shape} on a {@link Canvas}.
      *
-     * @param canvas the {@link Canvas} on which the {@link Shape} will be drawn.
-     * @param rect   the {@link RectF} representing the drawing area.
-     * @param paint  the {@link Paint} to use for drawing.
+     * @param canvas      the {@link Canvas} on which the {@link Shape} will be drawn.
+     * @param rect        the {@link RectF} representing the drawing area.
+     * @param paint       the {@link Paint} to use for drawing.
+     * @param borderPaint the {@link Paint} to use for drawing the border of the shapes.
      */
-    void draw(Canvas canvas, RectF rect, Paint paint);
+    void draw(Canvas canvas, RectF rect, Paint paint, Paint borderPaint);
 }

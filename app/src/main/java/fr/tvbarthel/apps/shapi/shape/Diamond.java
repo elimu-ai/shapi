@@ -13,7 +13,7 @@ public class Diamond implements Shape {
     private final Path path = new Path();
 
     @Override
-    public void draw(Canvas canvas, RectF rect, Paint paint) {
+    public void draw(Canvas canvas, RectF rect, Paint paint, Paint borderPaint) {
         path.reset();
         path.moveTo((rect.left + rect.centerX()) / 2f, rect.centerY());
         path.lineTo(rect.centerX(), rect.top);
@@ -22,6 +22,7 @@ public class Diamond implements Shape {
         path.close();
 
         canvas.drawPath(path, paint);
+        canvas.drawPath(path, borderPaint);
     }
 
 }
