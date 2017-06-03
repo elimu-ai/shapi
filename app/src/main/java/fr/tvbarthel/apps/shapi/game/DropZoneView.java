@@ -7,7 +7,10 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
+import javax.inject.Inject;
+
 import fr.tvbarthel.apps.shapi.R;
+import fr.tvbarthel.apps.shapi.core.ShapiApplication;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
@@ -21,10 +24,18 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 public class DropZoneView extends FrameLayout {
 
     /**
+     * Drop zone presenter.
+     */
+    @Inject
+    protected DropZoneContract.Presenter presenter;
+
+    /**
      * An internal {@link ShapeView}.
      */
     private ShapeView shapeView;
+    private DropZoneContract.View internalView;
     private Listener listener;
+    private DropZone dropZone;
 
     /**
      * Create a {@link DropZoneView}
@@ -59,16 +70,30 @@ public class DropZoneView extends FrameLayout {
         init(context);
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        presenter.attachView(internalView);
+        presenter.registerDragListener(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        presenter.detachView(internalView);
+        presenter.unregisterDragListener(this);
+    }
+
     /**
      * Set the {@link DropZone} that should be represented
      *
      * @param dropZone a {@link DropZone}
      */
     public void setDropZone(DropZone dropZone) {
+        this.dropZone = dropZone;
         final Shape shapeForDropZone = getShapeForDropZone(dropZone);
         shapeView.setShape(shapeForDropZone);
     }
-
 
     /**
      * Listener used to catch view events.
@@ -77,11 +102,6 @@ public class DropZoneView extends FrameLayout {
      */
     public void setListener(Listener listener) {
         this.listener = listener;
-    }
-
-    private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.view_drop_zone_box, this);
-        shapeView = ((ShapeView) findViewById(R.id.view_drop_zone_box_internal_shape));
     }
 
     private Shape getShapeForDropZone(DropZone dropZone) {
@@ -97,6 +117,28 @@ public class DropZoneView extends FrameLayout {
         } else {
             throw new IllegalArgumentException("Unsupported drop zone. Found: " + dropZoneShape);
         }
+    }
+
+    /**
+     * Initialize internal component.
+     *
+     * @param context holding context.
+     */
+
+    private void init(Context context) {
+        LayoutInflater.from(context).inflate(R.layout.view_drop_zone_box, this);
+        ShapiApplication.component().inject(this);
+
+        shapeView = ((ShapeView) findViewById(R.id.view_drop_zone_box_internal_shape));
+
+        internalView = new DropZoneContract.View() {
+            @Override
+            public void displayShapeDropped(Shape shape) {
+                if (listener != null) {
+                    listener.onShapeDropped(dropZone, shape);
+                }
+            }
+        };
     }
 
     /**

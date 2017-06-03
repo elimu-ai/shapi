@@ -1,5 +1,7 @@
 package fr.tvbarthel.apps.shapi.game;
 
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -13,11 +15,12 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 /**
  * Implementation completely mocked.
  */
-public class EnginePresenterMockImpl implements GameContract.Presenter {
+class EnginePresenterMockImpl implements GameContract.Presenter {
 
     private final ArrayList<Shape> shapes;
     private final ArrayList<DropZone> dropZones;
     private final Random random;
+    private final DragManager dragManager;
 
     private GameContract.View view;
     private boolean playing;
@@ -27,8 +30,12 @@ public class EnginePresenterMockImpl implements GameContract.Presenter {
 
     /**
      * Implementation completely mocked.
+     *
+     * @param dragManager manager used to perform drag motion.
      */
-    public EnginePresenterMockImpl() {
+    EnginePresenterMockImpl(DragManager dragManager) {
+        this.dragManager = dragManager;
+
         shapes = new ArrayList<>();
         shapes.add(new Rectangle());
         shapes.add(new Triangle());
@@ -74,6 +81,11 @@ public class EnginePresenterMockImpl implements GameContract.Presenter {
         updateGameView();
     }
 
+    @Override
+    public void startDrag(View view, View.DragShadowBuilder shadowBuilder, Shape shape) {
+        dragManager.startDrag(view, shadowBuilder, shape);
+    }
+
     private void initializeGame() {
         initializeShapes();
         initializeDropZones();
@@ -101,7 +113,7 @@ public class EnginePresenterMockImpl implements GameContract.Presenter {
     private void updateGameView() {
         if (view != null) {
             view.displayScore(rightAnswer, wrongAnswer);
-            view.displayShape(currentPlayedShape);
+            view.displayShape(currentPlayedShape, true);
         }
     }
 

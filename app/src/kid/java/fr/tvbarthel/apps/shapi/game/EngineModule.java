@@ -1,5 +1,7 @@
 package fr.tvbarthel.apps.shapi.game;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ import fr.tvbarthel.apps.shapi.audioeffect.AudioEffectEngine;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
+import fr.tvbarthel.apps.shapi.shape.Shape;
 import fr.tvbarthel.apps.shapi.shape.Triangle;
 import fr.tvbarthel.apps.shapi.shape.generation.ShapeGenerator;
 import fr.tvbarthel.apps.shapi.shape.identification.ShapeIdentifier;
@@ -32,15 +35,45 @@ public class EngineModule {
 
     @Provides
     @Singleton
-    GameContract.Presenter provideGamePresenter(GameEngine gameEngine) {
+    GameContract.Presenter provideGamePresenter(GameEngine gameEngine,
+                                                @NonNull List<Class<? extends Shape>> shapes,
+                                                @NonNull DragManager dragManager) {
+
         List<DropZone> dropZones = new ArrayList<>();
-        dropZones.add(new DropZone(Rectangle.class));
-        dropZones.add(new DropZone(Triangle.class));
-        dropZones.add(new DropZone(Circle.class));
-        dropZones.add(new DropZone(Diamond.class));
+        for (Class<? extends Shape> shape : shapes) {
+            dropZones.add(new DropZone(shape));
+        }
         Collections.shuffle(dropZones);
 
-        return new EnginePresenterKidImpl(gameEngine,
-                dropZones.toArray(new DropZone[dropZones.size()]));
+        return new EnginePresenterKidImpl(
+                gameEngine,
+                dropZones.toArray(new DropZone[dropZones.size()]),
+                dragManager
+        );
+    }
+
+    @Provides
+    DropZoneContract.Presenter provideDropZonePresenter(@NonNull DragManager dragManager,
+                                                        @NonNull List<Class<? extends Shape>> shapes) {
+        return new DropZonePresenterKidImpl(dragManager, shapes);
+    }
+
+    @Singleton
+    @Provides
+    @NonNull
+    DragManager provideDragManager() {
+        return DragManager.getInstance();
+    }
+
+    @Provides
+    @Singleton
+    @NonNull
+    List<Class<? extends Shape>> provideAvailableShapes() {
+        List<Class<? extends Shape>> availableShapes = new ArrayList<>();
+        availableShapes.add(Rectangle.class);
+        availableShapes.add(Triangle.class);
+        availableShapes.add(Circle.class);
+        availableShapes.add(Diamond.class);
+        return availableShapes;
     }
 }

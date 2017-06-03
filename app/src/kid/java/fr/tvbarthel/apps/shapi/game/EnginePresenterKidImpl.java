@@ -1,6 +1,7 @@
 package fr.tvbarthel.apps.shapi.game;
 
 import android.support.annotation.Size;
+import android.view.View;
 
 import fr.tvbarthel.apps.shapi.shape.Shape;
 
@@ -11,17 +12,22 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
 
     private final GameEngine gameEngine;
     private final DropZone[] dropZones;
+    private final DragManager dragManager;
     private GameContract.View view;
 
     /**
      * Create an {@link EnginePresenterKidImpl}
      *
-     * @param gameEngine a {@link GameEngine}
-     * @param dropZones  an array of 4 {@link DropZone}s.
+     * @param gameEngine  a {@link GameEngine}
+     * @param dropZones   an array of 4 {@link DropZone}s.
+     * @param dragManager manager used to perform drag motion.
      */
-    EnginePresenterKidImpl(GameEngine gameEngine, @Size(4) DropZone[] dropZones) {
+    EnginePresenterKidImpl(GameEngine gameEngine,
+                           @Size(4) DropZone[] dropZones,
+                           DragManager dragManager) {
         this.gameEngine = gameEngine;
         this.dropZones = dropZones;
+        this.dragManager = dragManager;
     }
 
     @Override
@@ -55,8 +61,19 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
         showCurrentShapeToIdentify();
     }
 
+    @Override
+    public void startDrag(View view, View.DragShadowBuilder shadowBuilder, Shape shape) {
+        dragManager.startDrag(view, shadowBuilder, shape);
+    }
+
     private void showCurrentShapeToIdentify() {
-        view.displayShape(gameEngine.getCurrentShapeToIdentify());
+        view.displayShape(gameEngine.getCurrentShapeToIdentify(), true);
+    }
+
+    private void hideCurrentShapeToIdentify() {
+        if (this.view != null) {
+            this.view.displayShape(gameEngine.getCurrentShapeToIdentify(), false);
+        }
     }
 
     private void showCurrentScore() {
