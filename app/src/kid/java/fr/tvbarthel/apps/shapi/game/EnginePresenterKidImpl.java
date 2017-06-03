@@ -1,4 +1,4 @@
-package fr.tvbarthel.apps.shapi.engine;
+package fr.tvbarthel.apps.shapi.game;
 
 import android.support.annotation.Size;
 

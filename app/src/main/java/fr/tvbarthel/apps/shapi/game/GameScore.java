@@ -1,4 +1,4 @@
-package fr.tvbarthel.apps.shapi.engine;
+package fr.tvbarthel.apps.shapi.game;
 
 /**
  * The score of a game.

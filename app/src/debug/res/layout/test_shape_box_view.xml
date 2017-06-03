@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fr.tvbarthel.apps.shapi.DropZoneBoxView
+    <fr.tvbarthel.apps.shapi.game.DropZoneView
         android:id="@+id/test_drop_zone_box_view"
         android:layout_width="@dimen/drop_zone_box_width"
         android:layout_height="@dimen/drop_zone_box_height"

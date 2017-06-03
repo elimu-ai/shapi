@@ -1,17 +1,18 @@
 package fr.tvbarthel.apps.shapi;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import fr.tvbarthel.apps.shapi.core.ShapiApplication;
-import fr.tvbarthel.apps.shapi.engine.DropZone;
-import fr.tvbarthel.apps.shapi.engine.GameContract;
+import fr.tvbarthel.apps.shapi.game.DropZone;
+import fr.tvbarthel.apps.shapi.game.DropZoneView;
+import fr.tvbarthel.apps.shapi.game.GameContract;
 import fr.tvbarthel.apps.shapi.shape.Shape;
 import fr.tvbarthel.apps.shapi.shape.ShapeView;
 
@@ -21,7 +22,7 @@ import fr.tvbarthel.apps.shapi.shape.ShapeView;
  * Never rename or move package.
  * https://android-developers.googleblog.com/2011/06/things-that-cannot-change.html
  */
-public class MainActivity extends AppCompatActivity implements GameContract.View, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements GameContract.View, DropZoneView.Listener {
 
     /**
      * Dummy injection example.
@@ -31,13 +32,13 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
 
     private TextView score;
     private ShapeView shapeView;
-    private DropZoneBoxView dropZone1;
-    private DropZoneBoxView dropZone2;
-    private DropZoneBoxView dropZone3;
-    private DropZoneBoxView dropZone4;
+
+    private DropZoneView dropZone1;
+    private DropZoneView dropZone2;
+    private DropZoneView dropZone3;
+    private DropZoneView dropZone4;
 
     private Shape playedShape;
-    private DropZone[] dropZones;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,15 +48,15 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
         score = ((TextView) findViewById(R.id.activity_main_score));
         shapeView = ((ShapeView) findViewById(R.id.activity_main_shape));
 
-        dropZone1 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_1));
-        dropZone2 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_2));
-        dropZone3 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_3));
-        dropZone4 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_4));
+        dropZone1 = ((DropZoneView) findViewById(R.id.activity_main_drop_zone_1));
+        dropZone2 = ((DropZoneView) findViewById(R.id.activity_main_drop_zone_2));
+        dropZone3 = ((DropZoneView) findViewById(R.id.activity_main_drop_zone_3));
+        dropZone4 = ((DropZoneView) findViewById(R.id.activity_main_drop_zone_4));
 
-        dropZone1.setOnClickListener(this);
-        dropZone2.setOnClickListener(this);
-        dropZone3.setOnClickListener(this);
-        dropZone4.setOnClickListener(this);
+        dropZone1.setListener(this);
+        dropZone2.setListener(this);
+        dropZone3.setListener(this);
+        dropZone4.setListener(this);
 
         ShapiApplication.component().inject(this);
         gamePresenter.attachView(this);
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
 
     @Override
     public void displayDropZones(@Size(4) DropZone[] zones) {
-        dropZones = zones;
         dropZone1.setDropZone(zones[0]);
         dropZone2.setDropZone(zones[1]);
         dropZone3.setDropZone(zones[2]);
@@ -100,23 +100,7 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.activity_main_drop_zone_1:
-                gamePresenter.computeScore(dropZones[0], playedShape);
-                break;
-            case R.id.activity_main_drop_zone_2:
-                gamePresenter.computeScore(dropZones[1], playedShape);
-                break;
-            case R.id.activity_main_drop_zone_3:
-                gamePresenter.computeScore(dropZones[2], playedShape);
-                break;
-            case R.id.activity_main_drop_zone_4:
-                gamePresenter.computeScore(dropZones[3], playedShape);
-                break;
-            default:
-                throw new IllegalStateException("Click not handled: " + v);
-
-        }
+    public void onShapeDropped(@NonNull DropZone dropZone, @Nullable Shape shape) {
+        gamePresenter.computeScore(dropZone, playedShape);
     }
 }
