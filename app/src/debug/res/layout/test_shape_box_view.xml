@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fr.tvbarthel.apps.shapi.DropZoneBoxView
+        android:id="@+id/test_drop_zone_box_view"
+        android:layout_width="@dimen/drop_zone_box_width"
+        android:layout_height="@dimen/drop_zone_box_height"
+        android:layout_gravity="center" />
+
+</FrameLayout>

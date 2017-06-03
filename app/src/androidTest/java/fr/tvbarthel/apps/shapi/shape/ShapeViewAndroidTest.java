@@ -12,6 +12,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import fr.tvbarthel.apps.shapi.R;
+
 /**
  * Android test for the class {@link ShapeView}
  */
@@ -19,55 +21,73 @@ import org.junit.runner.RunWith;
 public class ShapeViewAndroidTest {
 
     @Rule
-    public ActivityTestRule<TestShapeActivity> activityRule = new ActivityTestRule<>(TestShapeActivity.class);
+    public ActivityTestRule<TestActivity> activityRule = new ActivityTestRule<>(TestActivity.class);
     private Instrumentation instrumentation;
+    private ShapeView shapeView1;
+    private ShapeView shapeView2;
+    private ShapeView shapeView3;
 
     @Before
     public void setup() {
         instrumentation = InstrumentationRegistry.getInstrumentation();
-    }
+        setContentView();
 
+        final TestActivity activity = activityRule.getActivity();
+        shapeView1 = ((ShapeView) activity.findViewById(R.id.activity_test_shape_view_1));
+        shapeView2 = ((ShapeView) activity.findViewById(R.id.activity_test_shape_view_2));
+        shapeView3 = ((ShapeView) activity.findViewById(R.id.activity_test_shape_view_3));
+    }
 
     @Test
     public void drawRectangleShape() {
         final Rectangle rectangle = new Rectangle();
-        final TestShapeActivity activity = activityRule.getActivity();
-        setShape(activity, rectangle);
+        final TestActivity activity = activityRule.getActivity();
+        setShape(rectangle);
         Spoon.screenshot(activity, "draw-rectangle");
     }
 
     @Test
     public void drawTriangleShape() {
         final Triangle triangle = new Triangle();
-        final TestShapeActivity activity = activityRule.getActivity();
-        setShape(activity, triangle);
+        final TestActivity activity = activityRule.getActivity();
+        setShape(triangle);
         Spoon.screenshot(activity, "draw-triangle");
     }
 
     @Test
     public void drawCircleShape() {
         final Circle circle = new Circle();
-        final TestShapeActivity activity = activityRule.getActivity();
-        setShape(activity, circle);
+        final TestActivity activity = activityRule.getActivity();
+        setShape(circle);
         Spoon.screenshot(activity, "draw-circle");
     }
 
     @Test
     public void drawDiamondShape() {
         final Diamond diamond = new Diamond();
-        final TestShapeActivity activity = activityRule.getActivity();
-        setShape(activity, diamond);
+        final TestActivity activity = activityRule.getActivity();
+        setShape(diamond);
         Spoon.screenshot(activity, "draw-diamond");
     }
 
-    private void setShape(final TestShapeActivity shapeActivity, final Shape shape) {
+    private void setShape(final Shape shape) {
         instrumentation.runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                shapeActivity.setShape(shape);
+                shapeView1.setShape(shape);
+                shapeView2.setShape(shape);
+                shapeView3.setShape(shape);
             }
         });
     }
 
+    private void setContentView() {
+        instrumentation.runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                activityRule.getActivity().setContentView(R.layout.test_shape_view);
+            }
+        });
+    }
 
 }

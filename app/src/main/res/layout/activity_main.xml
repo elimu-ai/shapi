@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/activity_main"
+<FrameLayout android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,41 +12,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fr.tvbarthel.apps.shapi.MainActivity">
 
-    <TextView
-        android:id="@+id/activity_main_score"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
-    <fr.tvbarthel.apps.shapi.shape.ShapeView
-        android:id="@+id/activity_main_shape"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
         android:layout_gravity="center"
-        android:padding="4dp" />
+        android:orientation="vertical">
 
-    <Button
+        <TextView
+            android:id="@+id/activity_main_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <fr.tvbarthel.apps.shapi.shape.ShapeView
+            android:id="@+id/activity_main_shape"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:padding="4dp" />
+
+    </LinearLayout>
+
+    <fr.tvbarthel.apps.shapi.DropZoneBoxView
         android:id="@+id/activity_main_drop_zone_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/play" />
+        android:layout_width="@dimen/drop_zone_box_width"
+        android:layout_height="@dimen/drop_zone_box_height"
+        android:layout_gravity="start|top"
+        android:background="?selectableItemBackground" />
 
-    <Button
+    <fr.tvbarthel.apps.shapi.DropZoneBoxView
         android:id="@+id/activity_main_drop_zone_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/play" />
+        android:layout_width="@dimen/drop_zone_box_width"
+        android:layout_height="@dimen/drop_zone_box_height"
+        android:layout_gravity="end|top"
+        android:background="?selectableItemBackground" />
 
-    <Button
+    <fr.tvbarthel.apps.shapi.DropZoneBoxView
         android:id="@+id/activity_main_drop_zone_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/play" />
+        android:layout_width="@dimen/drop_zone_box_width"
+        android:layout_height="@dimen/drop_zone_box_height"
+        android:layout_gravity="start|bottom"
+        android:background="?selectableItemBackground" />
 
-    <Button
+    <fr.tvbarthel.apps.shapi.DropZoneBoxView
         android:id="@+id/activity_main_drop_zone_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/play" />
+        android:layout_width="@dimen/drop_zone_box_width"
+        android:layout_height="@dimen/drop_zone_box_height"
+        android:layout_gravity="end|bottom"
+        android:background="?selectableItemBackground" />
 
-</LinearLayout>
+</FrameLayout>
