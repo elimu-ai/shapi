@@ -8,4 +8,10 @@
     <suppress files="R.java" checks="[a-zA-Z0-9]*" />
     <suppress files="BuildConfig.java" checks="[a-zA-Z0-9]*" />
     <suppress files="[a-zA-Z0-9]*Test.java" checks="[a-zA-Z0-9]*" />
+
+    <!-- public APIs for dagger -->
+    <suppress files="AudioEffectModule.java" checks="JavadocMethod" />
+    <suppress files="EngineModule.java" checks="JavadocMethod" />
+    <suppress files="ShapeGenerationModule.java" checks="JavadocMethod" />
+    <suppress files="ShapeIdentificationModule.java" checks="JavadocMethod" />
 </suppressions>
