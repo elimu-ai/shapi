@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -32,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
 
     private TextView score;
     private ShapeView shapeView;
-    private Button dropZone1;
-    private Button dropZone2;
-    private Button dropZone3;
-    private Button dropZone4;
+    private DropZoneBoxView dropZone1;
+    private DropZoneBoxView dropZone2;
+    private DropZoneBoxView dropZone3;
+    private DropZoneBoxView dropZone4;
 
     private Shape playedShape;
     private DropZone[] dropZones;
@@ -48,10 +47,10 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
         score = ((TextView) findViewById(R.id.activity_main_score));
         shapeView = ((ShapeView) findViewById(R.id.activity_main_shape));
 
-        dropZone1 = ((Button) findViewById(R.id.activity_main_drop_zone_1));
-        dropZone2 = ((Button) findViewById(R.id.activity_main_drop_zone_2));
-        dropZone3 = ((Button) findViewById(R.id.activity_main_drop_zone_3));
-        dropZone4 = ((Button) findViewById(R.id.activity_main_drop_zone_4));
+        dropZone1 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_1));
+        dropZone2 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_2));
+        dropZone3 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_3));
+        dropZone4 = ((DropZoneBoxView) findViewById(R.id.activity_main_drop_zone_4));
 
         dropZone1.setOnClickListener(this);
         dropZone2.setOnClickListener(this);
@@ -88,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
     @Override
     public void displayDropZones(@Size(4) DropZone[] zones) {
         dropZones = zones;
-        dropZone1.setText(zones[0].getShapeName());
-        dropZone2.setText(zones[1].getShapeName());
-        dropZone3.setText(zones[2].getShapeName());
-        dropZone4.setText(zones[3].getShapeName());
+        dropZone1.setDropZone(zones[0]);
+        dropZone2.setDropZone(zones[1]);
+        dropZone3.setDropZone(zones[2]);
+        dropZone4.setDropZone(zones[3]);
     }
 
     @Override

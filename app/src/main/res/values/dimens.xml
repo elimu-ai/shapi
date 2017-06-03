@@ -4,4 +4,12 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="shape_stroke_width">2dp</dimen>
+
+    <dimen name="drop_zone_box_width">100dp</dimen>
+    <dimen name="drop_zone_box_height">100dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_padding">2dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_width">25dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_height">25dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_margin_top">15dp</dimen>
+
 </resources>

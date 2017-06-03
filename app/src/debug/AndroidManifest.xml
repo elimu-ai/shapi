@@ -7,7 +7,7 @@
 
     <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".shape.TestShapeActivity" />
+        <activity android:name=".shape.TestActivity" />
 
     </application>
 
