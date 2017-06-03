@@ -58,5 +58,13 @@ interface DropZoneContract {
          * @param shape dropped zone.
          */
         void displayShapeDropped(Shape shape);
+
+        /**
+         * Scale this {@link View}.
+         *
+         * @param scaleFactor the scale factor.
+         */
+        void scale(float scaleFactor);
+
     }
 }

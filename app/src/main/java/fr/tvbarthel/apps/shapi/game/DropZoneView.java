@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 
 import javax.inject.Inject;
@@ -24,6 +26,11 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 public class DropZoneView extends FrameLayout {
 
     /**
+     * The duration of the scale animation (in milliseconds).
+     */
+    private static final long SCALE_ANIMATION_DURATION = 300;
+
+    /**
      * Drop zone presenter.
      */
     @Inject
@@ -36,6 +43,7 @@ public class DropZoneView extends FrameLayout {
     private DropZoneContract.View internalView;
     private Listener listener;
     private DropZone dropZone;
+    private Interpolator scaleInterpolator;
 
     /**
      * Create a {@link DropZoneView}
@@ -129,6 +137,7 @@ public class DropZoneView extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.view_drop_zone_box, this);
         ShapiApplication.component().inject(this);
 
+        scaleInterpolator = new OvershootInterpolator();
         shapeView = ((ShapeView) findViewById(R.id.view_drop_zone_box_internal_shape));
 
         internalView = new DropZoneContract.View() {
@@ -137,6 +146,16 @@ public class DropZoneView extends FrameLayout {
                 if (listener != null) {
                     listener.onShapeDropped(dropZone, shape);
                 }
+            }
+
+            @Override
+            public void scale(float scaleFactor) {
+                DropZoneView.this.animate()
+                        .scaleX(scaleFactor)
+                        .scaleY(scaleFactor)
+                        .setDuration(SCALE_ANIMATION_DURATION)
+                        .setInterpolator(scaleInterpolator)
+                        .start();
             }
         };
     }

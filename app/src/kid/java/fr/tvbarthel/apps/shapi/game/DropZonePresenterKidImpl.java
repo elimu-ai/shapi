@@ -36,7 +36,24 @@ class DropZonePresenterKidImpl implements DropZoneContract.Presenter {
             protected void onDragDropped(View source, Object data) {
                 super.onDragDropped(source, data);
                 if (view != null) {
+                    view.scale(1f);
                     view.displayShapeDropped(((Shape) data));
+                }
+            }
+
+            @Override
+            protected void onDragEntered(View source, Object data) {
+                super.onDragEntered(source, data);
+                if (view != null) {
+                    view.scale(1.2f);
+                }
+            }
+
+            @Override
+            protected void onDragExited(View source, Object data) {
+                super.onDragExited(source, data);
+                if (view != null) {
+                    view.scale(1f);
                 }
             }
         };
