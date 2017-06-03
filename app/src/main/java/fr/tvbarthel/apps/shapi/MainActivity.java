@@ -1,6 +1,7 @@
 package fr.tvbarthel.apps.shapi;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,6 +14,7 @@ import fr.tvbarthel.apps.shapi.core.ShapiApplication;
 import fr.tvbarthel.apps.shapi.engine.DropZone;
 import fr.tvbarthel.apps.shapi.engine.GameContract;
 import fr.tvbarthel.apps.shapi.shape.Shape;
+import fr.tvbarthel.apps.shapi.shape.ShapeView;
 
 /**
  * Main Activity.
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
     protected GameContract.Presenter gamePresenter;
 
     private TextView score;
-    private TextView shape;
+    private ShapeView shapeView;
     private Button dropZone1;
     private Button dropZone2;
     private Button dropZone3;
@@ -39,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
     private DropZone[] dropZones;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         score = ((TextView) findViewById(R.id.activity_main_score));
-        shape = ((TextView) findViewById(R.id.activity_main_shape));
+        shapeView = ((ShapeView) findViewById(R.id.activity_main_shape));
 
         dropZone1 = ((Button) findViewById(R.id.activity_main_drop_zone_1));
         dropZone2 = ((Button) findViewById(R.id.activity_main_drop_zone_2));
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements GameContract.View
     @Override
     public void displayShape(Shape shape) {
         playedShape = shape;
-        this.shape.setText(shape.getClass().getSimpleName());
+        shapeView.setShape(shape);
     }
 
     @Override
