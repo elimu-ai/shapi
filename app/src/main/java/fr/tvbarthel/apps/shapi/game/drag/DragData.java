@@ -1,4 +1,4 @@
-package fr.tvbarthel.apps.shapi.game;
+package fr.tvbarthel.apps.shapi.game.drag;
 
 import android.view.View;
 

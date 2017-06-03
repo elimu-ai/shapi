@@ -1,4 +1,4 @@
-package fr.tvbarthel.apps.shapi.game;
+package fr.tvbarthel.apps.shapi.game.drag;
 
 import android.content.ClipDescription;
 import android.view.DragEvent;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Simple drag listener.
  * Don't support multi-drag.
  */
-class DragListener {
+public class DragListener {
 
     /**
      * {@link View.OnDragListener} used internally.
