@@ -8,18 +8,15 @@ import fr.tvbarthel.apps.shapi.shape.Shape;
 class EnginePresenterKidImpl implements GameContract.Presenter {
 
     private final GameEngine gameEngine;
-    private final Field field;
     private GameContract.View view;
 
     /**
      * Create an {@link EnginePresenterKidImpl}
      *
-     * @param gameEngine a {@link GameEngine}
-     * @param field      current game field data.
+     * @param gameEngine a {@link GameEngine}.
      */
-    EnginePresenterKidImpl(GameEngine gameEngine, Field field) {
+    EnginePresenterKidImpl(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        this.field = field;
     }
 
     @Override
@@ -51,6 +48,7 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
         gameEngine.identifyCurrentShape(zone.getShape());
         showCurrentScore();
         showCurrentShapeToIdentify();
+        showDropZones();
     }
 
     private void showCurrentShapeToIdentify() {
@@ -63,6 +61,6 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
     }
 
     private void showDropZones() {
-        view.displayField(field);
+        view.displayField(gameEngine.getCurrentField());
     }
 }

@@ -10,6 +10,8 @@ import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+
 import fr.tvbarthel.apps.shapi.R;
 import fr.tvbarthel.apps.shapi.core.ShapiApplication;
 import fr.tvbarthel.apps.shapi.shape.Circle;
@@ -83,7 +85,8 @@ public class DropZoneView extends FrameLayout {
         this.dropZone = dropZone;
         final Shape shapeForDropZone = getShapeForDropZone(dropZone);
         shapeView.setShape(shapeForDropZone);
-        dragHelper.register(DropZoneView.this, dragListener, dropZone.getAvailableShapes());
+        //noinspection unchecked
+        dragHelper.register(DropZoneView.this, dragListener, new ArrayList<Class<?>>(dropZone.getAvailableShapes()));
     }
 
     /**

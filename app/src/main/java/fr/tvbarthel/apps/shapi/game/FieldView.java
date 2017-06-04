@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+
 import fr.tvbarthel.apps.shapi.ui.drag.DragHelper;
 import fr.tvbarthel.apps.shapi.ui.drag.DragListener;
 
@@ -59,7 +61,8 @@ public class FieldView extends FrameLayout {
      */
     public void setField(@NonNull Field field) {
         this.field = field;
-        dragHelper.register(this, dragListener, field.getAvailableShapes());
+        //noinspection unchecked
+        dragHelper.register(this, dragListener, new ArrayList<Class<?>>(field.getAvailableShapes()));
     }
 
     /**

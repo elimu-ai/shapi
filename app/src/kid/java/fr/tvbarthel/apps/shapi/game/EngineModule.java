@@ -3,7 +3,6 @@ package fr.tvbarthel.apps.shapi.game;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -29,31 +28,21 @@ public class EngineModule {
     @Singleton
     GameEngine provideGameEngine(ShapeGenerator shapeGenerator,
                                  ShapeIdentifier shapeIdentifier,
-                                 AudioEffectEngine audioEffectEngine) {
-        return new GameEngine(shapeIdentifier, shapeGenerator, audioEffectEngine);
+                                 AudioEffectEngine audioEffectEngine,
+                                 FieldGenerator fieldGenerator) {
+        return new GameEngine(shapeIdentifier, shapeGenerator, audioEffectEngine, fieldGenerator);
     }
 
     @Provides
     @Singleton
-    GameContract.Presenter provideGamePresenter(GameEngine gameEngine,
-                                                Field field) {
-        return new EnginePresenterKidImpl(gameEngine, field);
+    GameContract.Presenter provideGamePresenter(GameEngine gameEngine) {
+        return new EnginePresenterKidImpl(gameEngine);
     }
 
     @Provides
     @Singleton
-    @NonNull
-    Field provideField(@NonNull List<Class<? extends Shape>> shapes) {
-        List<Class<?>> availableShapes = new ArrayList<>();
-        List<DropZone> dropZones = new ArrayList<>();
-
-        for (Class<? extends Shape> shape : shapes) {
-            availableShapes.add(shape);
-            dropZones.add(new DropZone(shape, availableShapes));
-        }
-        Collections.shuffle(dropZones);
-
-        return new Field(dropZones.toArray(new DropZone[dropZones.size()]), availableShapes);
+    FieldGenerator provideFieldGenerator(List<Class<? extends Shape>> availableShapes) {
+        return new FieldGenerator(availableShapes);
     }
 
     @Provides

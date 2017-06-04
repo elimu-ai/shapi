@@ -14,7 +14,9 @@ public class GameEngine {
     private final ShapeIdentifier shapeIdentifier;
     private final ShapeGenerator shapeGenerator;
     private final AudioEffectEngine audioEffectEngine;
+    private final FieldGenerator fieldGenerator;
     private Shape currentShape;
+    private Field currentField;
 
     /**
      * Create a new {@link GameEngine}.
@@ -22,13 +24,17 @@ public class GameEngine {
      * @param shapeIdentifier   a {@link ShapeIdentifier}
      * @param shapeGenerator    a {@link ShapeGenerator}
      * @param audioEffectEngine an {@link AudioEffectEngine}
+     * @param fieldGenerator    a {@link FieldGenerator}
      */
-    GameEngine(ShapeIdentifier shapeIdentifier, ShapeGenerator shapeGenerator, AudioEffectEngine audioEffectEngine) {
+    GameEngine(ShapeIdentifier shapeIdentifier, ShapeGenerator shapeGenerator,
+               AudioEffectEngine audioEffectEngine, FieldGenerator fieldGenerator) {
         this.shapeIdentifier = shapeIdentifier;
         this.shapeGenerator = shapeGenerator;
         this.audioEffectEngine = audioEffectEngine;
+        this.fieldGenerator = fieldGenerator;
 
         this.currentShape = this.shapeGenerator.generate();
+        this.currentField = generateNewField();
     }
 
     /**
@@ -52,6 +58,7 @@ public class GameEngine {
         if (shapeIdentifier.identify(currentShape, classz)) {
             audioEffectEngine.play(AudioEffects.AUDIO_EFFECT_ID_SUCCESS);
             currentShape = shapeGenerator.generate();
+            currentField = generateNewField();
             return true;
         } else {
             audioEffectEngine.play(AudioEffects.AUDIO_EFFECT_ID_FAILURE);
@@ -68,5 +75,26 @@ public class GameEngine {
         return new GameScore(shapeIdentifier.getCorrectlyIdentifiedShapes().size(),
                 shapeIdentifier.getIncorrectlyIdentifiedShapes().size());
     }
+
+    /**
+     * Get the current {@link Field}.
+     *
+     * @return the current {@link Field}.
+     */
+    Field getCurrentField() {
+        return currentField;
+    }
+
+    private Field generateNewField() {
+        final int numberOfCorrectAnswers = getCurrentScore().getNumberOfCorrectAnswers();
+        if (numberOfCorrectAnswers == 0) {
+            return fieldGenerator.generateNewField(currentShape, FieldGenerator.LEVEL_1);
+        } else if (numberOfCorrectAnswers == 1) {
+            return fieldGenerator.generateNewField(currentShape, FieldGenerator.LEVEL_2);
+        } else {
+            return fieldGenerator.generateNewField(currentShape, FieldGenerator.LEVEL_3);
+        }
+    }
+
 
 }

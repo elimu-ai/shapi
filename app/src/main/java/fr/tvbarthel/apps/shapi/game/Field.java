@@ -1,18 +1,18 @@
 package fr.tvbarthel.apps.shapi.game;
 
-import android.support.annotation.Size;
-
+import java.util.ArrayList;
 import java.util.List;
+
+import fr.tvbarthel.apps.shapi.shape.Shape;
 
 /**
  * Encapsulate data linked to the game field.
  */
 public class Field {
 
-    @Size(4)
-    private final DropZone[] zones;
+    private final List<DropZone> zones;
 
-    private final List<Class<?>> availableShapes;
+    private final List<Class<? extends Shape>> availableShapes;
 
     /**
      * Encapsulate data linked to the game field.
@@ -20,7 +20,7 @@ public class Field {
      * @param zones           drop zone which must be displayed on the field.
      * @param availableShapes available shapes type which can spawn on the field.
      */
-    public Field(DropZone[] zones, List<Class<?>> availableShapes) {
+    public Field(List<DropZone> zones, List<Class<? extends Shape>> availableShapes) {
         this.zones = zones;
         this.availableShapes = availableShapes;
     }
@@ -30,8 +30,8 @@ public class Field {
      *
      * @return drop zone which must be displayed on the field.
      */
-    public DropZone[] getZones() {
-        return zones;
+    public List<DropZone> getZones() {
+        return new ArrayList<>(zones);
     }
 
     /**
@@ -39,7 +39,7 @@ public class Field {
      *
      * @return available shapes type which can spawn on the field.
      */
-    public List<Class<?>> getAvailableShapes() {
+    public List<Class<? extends Shape>> getAvailableShapes() {
         return availableShapes;
     }
 }
