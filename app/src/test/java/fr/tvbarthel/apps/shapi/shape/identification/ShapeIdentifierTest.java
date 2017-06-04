@@ -2,9 +2,12 @@ package fr.tvbarthel.apps.shapi.shape.identification;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import fr.tvbarthel.apps.shapi.event.EventTracker;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
@@ -14,6 +17,8 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 /**
  * Test for the {@link ShapeIdentifier} class;
@@ -21,11 +26,14 @@ import static junit.framework.Assert.assertTrue;
 public class ShapeIdentifierTest {
 
 
+    @Mock
+    private EventTracker eventTracker;
     private ShapeIdentifier shapeIdentifier;
 
     @Before
     public void setup() {
-        shapeIdentifier = new ShapeIdentifier();
+        MockitoAnnotations.initMocks(this);
+        shapeIdentifier = new ShapeIdentifier(eventTracker);
     }
 
     @Test
@@ -68,6 +76,22 @@ public class ShapeIdentifierTest {
         assertEquals(2, incorrectlyIdentifiedShapes.size());
         assertEquals(rectangle, incorrectlyIdentifiedShapes.get(0));
         assertEquals(diamond, incorrectlyIdentifiedShapes.get(1));
+    }
+
+    @Test
+    public void whenIdentifyCorrectlyThenTrackEvent() {
+        final Rectangle rectangle = new Rectangle();
+        shapeIdentifier.identify(rectangle, Rectangle.class);
+
+        verify(eventTracker).trackShapeCorrectlyIdentified(rectangle);
+    }
+
+    @Test
+    public void whenIdentifyIncorrectlyThenDoNotTrackEvent() {
+        final Rectangle rectangle = new Rectangle();
+        shapeIdentifier.identify(rectangle, Triangle.class);
+
+        verify(eventTracker, never()).trackShapeCorrectlyIdentified(rectangle);
     }
 
 }

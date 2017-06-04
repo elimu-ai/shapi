@@ -3,6 +3,7 @@ package fr.tvbarthel.apps.shapi.shape.identification;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.tvbarthel.apps.shapi.event.EventTracker;
 import fr.tvbarthel.apps.shapi.shape.Shape;
 
 /**
@@ -10,13 +11,17 @@ import fr.tvbarthel.apps.shapi.shape.Shape;
  */
 public class ShapeIdentifier {
 
+    private final EventTracker eventTracker;
     private final List<Shape> shapeCorrectlyIdentified;
     private final List<Shape> shapeIncorrectlyIdentified;
 
     /**
      * Construct a {@link ShapeIdentifier}
+     *
+     * @param eventTracker an {@link EventTracker}.
      */
-    public ShapeIdentifier() {
+    public ShapeIdentifier(EventTracker eventTracker) {
+        this.eventTracker = eventTracker;
         shapeCorrectlyIdentified = new ArrayList<>();
         shapeIncorrectlyIdentified = new ArrayList<>();
     }
@@ -30,6 +35,7 @@ public class ShapeIdentifier {
      */
     public boolean identify(Shape shape, Class<? extends Shape> classz) {
         if (classz.isAssignableFrom(shape.getClass())) {
+            eventTracker.trackShapeCorrectlyIdentified(shape);
             shapeCorrectlyIdentified.add(shape);
             return true;
         } else {
