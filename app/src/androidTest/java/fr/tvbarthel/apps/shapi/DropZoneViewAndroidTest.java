@@ -12,11 +12,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import fr.tvbarthel.apps.shapi.engine.DropZone;
+import java.util.Collections;
+
+import fr.tvbarthel.apps.shapi.game.DropZone;
 import fr.tvbarthel.apps.shapi.game.DropZoneView;
 import fr.tvbarthel.apps.shapi.shape.Circle;
 import fr.tvbarthel.apps.shapi.shape.Diamond;
 import fr.tvbarthel.apps.shapi.shape.Rectangle;
+import fr.tvbarthel.apps.shapi.shape.Shape;
 import fr.tvbarthel.apps.shapi.shape.TestActivity;
 import fr.tvbarthel.apps.shapi.shape.Triangle;
 
@@ -41,7 +44,7 @@ public class DropZoneViewAndroidTest {
 
     @Test
     public void dropZoneForRectangle() {
-        final DropZone dropZone = new DropZone(Rectangle.class);
+        final DropZone dropZone = new DropZone(Rectangle.class, Collections.<Class<? extends Shape>>emptyList());
         final TestActivity activity = activityRule.getActivity();
         setDropZone(dropZone);
         Spoon.screenshot(activity, "drop-zone-for-rectangle");
@@ -49,7 +52,7 @@ public class DropZoneViewAndroidTest {
 
     @Test
     public void dropZoneForTriangle() {
-        final DropZone dropZone = new DropZone(Triangle.class);
+        final DropZone dropZone = new DropZone(Triangle.class, Collections.<Class<? extends Shape>>emptyList());
         final TestActivity activity = activityRule.getActivity();
         setDropZone(dropZone);
         Spoon.screenshot(activity, "drop-zone-for-triangle");
@@ -57,7 +60,7 @@ public class DropZoneViewAndroidTest {
 
     @Test
     public void dropZoneForCircle() {
-        final DropZone dropZone = new DropZone(Circle.class);
+        final DropZone dropZone = new DropZone(Circle.class, Collections.<Class<? extends Shape>>emptyList());
         final TestActivity activity = activityRule.getActivity();
         setDropZone(dropZone);
         Spoon.screenshot(activity, "drop-zone-for-circle");
@@ -65,7 +68,7 @@ public class DropZoneViewAndroidTest {
 
     @Test
     public void dropZoneForDiamond() {
-        final DropZone dropZone = new DropZone(Diamond.class);
+        final DropZone dropZone = new DropZone(Diamond.class, Collections.<Class<? extends Shape>>emptyList());
         final TestActivity activity = activityRule.getActivity();
         setDropZone(dropZone);
         Spoon.screenshot(activity, "drop-zone-for-diamond");
