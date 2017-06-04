@@ -12,6 +12,7 @@
     <!-- public APIs for dagger -->
     <suppress files="AudioEffectModule.java" checks="JavadocMethod" />
     <suppress files="EngineModule.java" checks="JavadocMethod" />
+    <suppress files="EventModule.java" checks="JavadocMethod" />
     <suppress files="ShapeGenerationModule.java" checks="JavadocMethod" />
     <suppress files="ShapeIdentificationModule.java" checks="JavadocMethod" />
 </suppressions>

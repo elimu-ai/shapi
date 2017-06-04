@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import fr.tvbarthel.apps.shapi.event.EventTracker;
 
 /**
  * A {@link Module} for the shape identification package
@@ -13,7 +14,7 @@ public class ShapeIdentificationModule {
 
     @Provides
     @Singleton
-    ShapeIdentifier provideShapeIdentifier() {
-        return new ShapeIdentifier();
+    ShapeIdentifier provideShapeIdentifier(EventTracker eventTracker) {
+        return new ShapeIdentifier(eventTracker);
     }
 }

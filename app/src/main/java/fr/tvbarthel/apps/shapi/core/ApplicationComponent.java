@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import fr.tvbarthel.apps.shapi.MainActivity;
 import fr.tvbarthel.apps.shapi.audioeffect.AudioEffectModule;
+import fr.tvbarthel.apps.shapi.event.EventModule;
 import fr.tvbarthel.apps.shapi.game.DropZoneView;
 import fr.tvbarthel.apps.shapi.game.EngineModule;
 import fr.tvbarthel.apps.shapi.shape.generation.ShapeGenerationModule;
@@ -18,6 +19,7 @@ import fr.tvbarthel.apps.shapi.shape.identification.ShapeIdentificationModule;
         ApplicationModule.class,
         AudioEffectModule.class,
         EngineModule.class,
+        EventModule.class,
         ShapeGenerationModule.class,
         ShapeIdentificationModule.class
 })
