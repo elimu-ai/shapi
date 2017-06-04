@@ -1,5 +1,7 @@
 package fr.tvbarthel.apps.shapi.game;
 
+import java.util.List;
+
 import fr.tvbarthel.apps.shapi.shape.Shape;
 
 /**
@@ -9,15 +11,18 @@ public class DropZone {
 
     private final Class<? extends Shape> shape;
     private final String shapeName;
+    private final List<Class<?>> availableShapes;
 
     /**
      * Encapsulate data linked to an area where the player can drop a shape.
      *
-     * @param shape shape allowed in this area.
+     * @param shape           shape allowed in this area.
+     * @param availableShapes available shapes type which can be dropped in the zone.
      */
-    public DropZone(Class<? extends Shape> shape) {
+    public DropZone(Class<? extends Shape> shape, List<Class<?>> availableShapes) {
         this.shape = shape;
         this.shapeName = shape.getSimpleName();
+        this.availableShapes = availableShapes;
     }
 
     /**
@@ -36,5 +41,14 @@ public class DropZone {
      */
     public String getShapeName() {
         return shapeName;
+    }
+
+    /**
+     * available shapes type which can be dropped in the zone.
+     *
+     * @return available shapes type which can be dropped in the zone.
+     */
+    public List<Class<?>> getAvailableShapes() {
+        return availableShapes;
     }
 }

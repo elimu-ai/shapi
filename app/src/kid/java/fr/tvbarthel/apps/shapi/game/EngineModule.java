@@ -36,23 +36,24 @@ public class EngineModule {
     @Provides
     @Singleton
     GameContract.Presenter provideGamePresenter(GameEngine gameEngine,
-                                                @NonNull List<Class<? extends Shape>> shapes) {
-
-        List<DropZone> dropZones = new ArrayList<>();
-        for (Class<? extends Shape> shape : shapes) {
-            dropZones.add(new DropZone(shape));
-        }
-        Collections.shuffle(dropZones);
-
-        return new EnginePresenterKidImpl(
-                gameEngine,
-                dropZones.toArray(new DropZone[dropZones.size()])
-        );
+                                                Field field) {
+        return new EnginePresenterKidImpl(gameEngine, field);
     }
 
     @Provides
-    DropZoneContract.Presenter provideDropZonePresenter(@NonNull List<Class<? extends Shape>> shapes) {
-        return new DropZonePresenterKidImpl(shapes);
+    @Singleton
+    @NonNull
+    Field provideField(@NonNull List<Class<? extends Shape>> shapes) {
+        List<Class<?>> availableShapes = new ArrayList<>();
+        List<DropZone> dropZones = new ArrayList<>();
+
+        for (Class<? extends Shape> shape : shapes) {
+            availableShapes.add(shape);
+            dropZones.add(new DropZone(shape, availableShapes));
+        }
+        Collections.shuffle(dropZones);
+
+        return new Field(dropZones.toArray(new DropZone[dropZones.size()]), availableShapes);
     }
 
     @Provides

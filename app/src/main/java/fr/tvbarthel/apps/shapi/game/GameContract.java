@@ -1,7 +1,5 @@
 package fr.tvbarthel.apps.shapi.game;
 
-import android.support.annotation.Size;
-
 import fr.tvbarthel.apps.shapi.shape.Shape;
 
 /**
@@ -38,7 +36,7 @@ public interface GameContract {
          * Must initialize the game engine at start spawning shape.
          * <p>
          * See also:
-         * {@link View#displayDropZones(DropZone[])}
+         * {@link View#displayField(DropZone[])}
          * {@link View#displayShape(Shape, boolean)}
          */
         void start();
@@ -74,11 +72,11 @@ public interface GameContract {
         void displayScore(int right, int wrong);
 
         /**
-         * Called when the zones where the user can drop a {@link Shape} must be displayed.
+         * Called when the game field must be displayed to the user.
          *
-         * @param zones 4 zones to display.
+         * @param field game field to display.
          */
-        void displayDropZones(@Size(4) DropZone[] zones);
+        void displayField(Field field);
 
         /**
          * Called when a new shape has just spawned and must be displayed to the user.

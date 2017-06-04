@@ -4,8 +4,8 @@ import android.content.ClipData;
 import android.os.Build;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Manager drag motion.
@@ -58,7 +58,7 @@ public final class DragHelper {
      * @param listener       listener
      * @param droppableClass class which can be droppable.
      */
-    public void register(View area, DragListener listener, ArrayList<Class<?>> droppableClass) {
+    public void register(View area, DragListener listener, List<Class<?>> droppableClass) {
         for (Class<?> droppable : droppableClass) {
             listener.addClassName(droppable.getName());
         }
