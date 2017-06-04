@@ -11,7 +11,7 @@ public class DropZone {
 
     private final Class<? extends Shape> shape;
     private final String shapeName;
-    private final List<Class<?>> availableShapes;
+    private final List<Class<? extends Shape>> availableShapes;
 
     /**
      * Encapsulate data linked to an area where the player can drop a shape.
@@ -19,7 +19,7 @@ public class DropZone {
      * @param shape           shape allowed in this area.
      * @param availableShapes available shapes type which can be dropped in the zone.
      */
-    public DropZone(Class<? extends Shape> shape, List<Class<?>> availableShapes) {
+    public DropZone(Class<? extends Shape> shape, List<Class<? extends Shape>> availableShapes) {
         this.shape = shape;
         this.shapeName = shape.getSimpleName();
         this.availableShapes = availableShapes;
@@ -48,7 +48,7 @@ public class DropZone {
      *
      * @return available shapes type which can be dropped in the zone.
      */
-    public List<Class<?>> getAvailableShapes() {
+    public List<Class<? extends Shape>> getAvailableShapes() {
         return availableShapes;
     }
 }

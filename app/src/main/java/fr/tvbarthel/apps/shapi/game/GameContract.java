@@ -36,7 +36,7 @@ public interface GameContract {
          * Must initialize the game engine at start spawning shape.
          * <p>
          * See also:
-         * {@link View#displayField(DropZone[])}
+         * {@link View#displayField(Field)}
          * {@link View#displayShape(Shape, boolean)}
          */
         void start();

@@ -30,7 +30,7 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
      * Implementation completely mocked.
      */
     EnginePresenterMockImpl() {
-        List<Class<?>> availableShapes = new ArrayList<>();
+        List<Class<? extends Shape>> availableShapes = new ArrayList<>();
         availableShapes.add(Rectangle.class);
         availableShapes.add(Triangle.class);
         availableShapes.add(Circle.class);
@@ -48,7 +48,7 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
         dropZones.add(new DropZone(Circle.class, availableShapes));
         dropZones.add(new DropZone(Diamond.class, availableShapes));
 
-        gameField = new Field(dropZones.toArray(new DropZone[dropZones.size()]), availableShapes);
+        gameField = new Field(dropZones, availableShapes);
 
         random = new Random(System.currentTimeMillis());
     }

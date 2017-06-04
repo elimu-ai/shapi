@@ -31,6 +31,8 @@ public class GameEngineTest {
     @Mock
     AudioEffectEngine audioEffectEngine;
     @Mock
+    FieldGenerator fieldGenerator;
+    @Mock
     List<Shape> correctlyIdentifiedShapes;
     @Mock
     List<Shape> incorrectlyIdentifiedShapes;
@@ -97,6 +99,6 @@ public class GameEngineTest {
     }
 
     private GameEngine createGameEngine() {
-        return new GameEngine(shapeIdentifier, shapeGenerator, audioEffectEngine);
+        return new GameEngine(shapeIdentifier, shapeGenerator, audioEffectEngine, fieldGenerator);
     }
 }
