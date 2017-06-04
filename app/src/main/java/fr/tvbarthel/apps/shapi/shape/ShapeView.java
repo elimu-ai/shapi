@@ -143,6 +143,7 @@ public class ShapeView extends View {
     }
 
     private void startDragMotion() {
+        ShapeView.this.setVisibility(INVISIBLE);
         dragHelper.startDrag(ShapeView.this, new DragShadowBuilder(ShapeView.this), shape);
     }
 }

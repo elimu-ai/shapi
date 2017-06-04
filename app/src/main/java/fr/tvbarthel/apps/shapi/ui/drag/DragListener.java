@@ -91,8 +91,10 @@ public class DragListener {
      *
      * @param source dragged item view source.
      * @param data   data passed when drag was started.
+     * @param x      x position of the dragging point.
+     * @param y      y position of the dragging point.
      */
-    protected void onDragDropped(View source, Object data) {
+    protected void onDragDropped(View source, Object data, float x, float y) {
 
     }
 
@@ -145,11 +147,16 @@ public class DragListener {
                         onDragEntered(mDraggedItem.getSource(), mDraggedItem.getData());
                         break;
                     case DragEvent.ACTION_DRAG_LOCATION:
-                        onDragLocation(mDraggedItem.getSource(), mDraggedItem.getData(),
-                                event.getX(), event.getY());
+                        onDragLocation(
+                                mDraggedItem.getSource(), mDraggedItem.getData(),
+                                event.getX(), event.getY()
+                        );
                         break;
                     case DragEvent.ACTION_DROP:
-                        onDragDropped(mDraggedItem.getSource(), mDraggedItem.getData());
+                        onDragDropped(
+                                mDraggedItem.getSource(), mDraggedItem.getData(),
+                                event.getX(), event.getY()
+                        );
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
                         onDragExited(mDraggedItem.getSource(), mDraggedItem.getData());

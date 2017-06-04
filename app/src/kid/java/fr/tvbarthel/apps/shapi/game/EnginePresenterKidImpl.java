@@ -1,7 +1,5 @@
 package fr.tvbarthel.apps.shapi.game;
 
-import android.support.annotation.Size;
-
 import fr.tvbarthel.apps.shapi.shape.Shape;
 
 /**
@@ -10,19 +8,18 @@ import fr.tvbarthel.apps.shapi.shape.Shape;
 class EnginePresenterKidImpl implements GameContract.Presenter {
 
     private final GameEngine gameEngine;
-    private final DropZone[] dropZones;
+    private final Field field;
     private GameContract.View view;
 
     /**
      * Create an {@link EnginePresenterKidImpl}
      *
      * @param gameEngine a {@link GameEngine}
-     * @param dropZones  an array of 4 {@link DropZone}s.
+     * @param field      current game field data.
      */
-    EnginePresenterKidImpl(GameEngine gameEngine,
-                           @Size(4) DropZone[] dropZones) {
+    EnginePresenterKidImpl(GameEngine gameEngine, Field field) {
         this.gameEngine = gameEngine;
-        this.dropZones = dropZones;
+        this.field = field;
     }
 
     @Override
@@ -66,6 +63,6 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
     }
 
     private void showDropZones() {
-        view.displayDropZones(dropZones);
+        view.displayField(field);
     }
 }

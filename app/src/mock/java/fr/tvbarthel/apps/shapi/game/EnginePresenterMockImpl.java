@@ -2,6 +2,7 @@ package fr.tvbarthel.apps.shapi.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import fr.tvbarthel.apps.shapi.shape.Circle;
@@ -16,8 +17,8 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 class EnginePresenterMockImpl implements GameContract.Presenter {
 
     private final ArrayList<Shape> shapes;
-    private final ArrayList<DropZone> dropZones;
     private final Random random;
+    private final Field gameField;
 
     private GameContract.View view;
     private boolean playing;
@@ -29,17 +30,25 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
      * Implementation completely mocked.
      */
     EnginePresenterMockImpl() {
+        List<Class<?>> availableShapes = new ArrayList<>();
+        availableShapes.add(Rectangle.class);
+        availableShapes.add(Triangle.class);
+        availableShapes.add(Circle.class);
+        availableShapes.add(Diamond.class);
+
         shapes = new ArrayList<>();
         shapes.add(new Rectangle());
         shapes.add(new Triangle());
         shapes.add(new Circle());
         shapes.add(new Diamond());
 
-        dropZones = new ArrayList<>();
-        dropZones.add(new DropZone(Rectangle.class));
-        dropZones.add(new DropZone(Triangle.class));
-        dropZones.add(new DropZone(Circle.class));
-        dropZones.add(new DropZone(Diamond.class));
+        ArrayList<DropZone> dropZones = new ArrayList<>();
+        dropZones.add(new DropZone(Rectangle.class, availableShapes));
+        dropZones.add(new DropZone(Triangle.class, availableShapes));
+        dropZones.add(new DropZone(Circle.class, availableShapes));
+        dropZones.add(new DropZone(Diamond.class, availableShapes));
+
+        gameField = new Field(dropZones.toArray(new DropZone[dropZones.size()]), availableShapes);
 
         random = new Random(System.currentTimeMillis());
     }
@@ -76,7 +85,7 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
 
     private void initializeGame() {
         initializeShapes();
-        initializeDropZones();
+        initializeField();
         initializeScore();
         currentPlayedShape = shapes.get(random.nextInt(4));
 
@@ -91,10 +100,9 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
         Collections.shuffle(shapes);
     }
 
-    private void initializeDropZones() {
-        Collections.shuffle(dropZones);
+    private void initializeField() {
         if (view != null) {
-            view.displayDropZones(dropZones.toArray(new DropZone[dropZones.size()]));
+            view.displayField(gameField);
         }
     }
 

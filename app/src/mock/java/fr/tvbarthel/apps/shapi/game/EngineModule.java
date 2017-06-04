@@ -33,11 +33,6 @@ public class EngineModule {
     }
 
     @Provides
-    DropZoneContract.Presenter provideDropZonePresenter(@NonNull List<Class<? extends Shape>> shapes) {
-        return new DropZonePresenterMockImpl(shapes);
-    }
-
-    @Provides
     @Singleton
     @NonNull
     List<Class<? extends Shape>> provideAvailableShapes() {
