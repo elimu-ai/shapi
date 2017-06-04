@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import fr.tvbarthel.apps.shapi.R;
 import fr.tvbarthel.apps.shapi.ui.drag.DragHelper;
@@ -25,6 +27,7 @@ public class ShapeView extends View {
     private Paint borderPaint;
     private Shape shape;
     private DragHelper dragHelper;
+    private Animation wiggleAnimation;
 
     /**
      * A {@link View} responsible of drawing a {@link Shape}
@@ -73,25 +76,6 @@ public class ShapeView extends View {
         init(context);
     }
 
-    /**
-     * Set the {@link Shape} to draw.
-     *
-     * @param shape a {@link Shape}.
-     */
-    public void setShape(@Nullable Shape shape) {
-        this.shape = shape;
-        invalidate();
-    }
-
-    /**
-     * {@link Shape} currently displayed inside the given view.
-     *
-     * @return shape currently displayed.
-     */
-    public Shape getShape() {
-        return shape;
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -112,6 +96,32 @@ public class ShapeView extends View {
         shapeRect.set(shapeLeft, shapeTop, shapeRight, shareBottom);
     }
 
+    /**
+     * Set the {@link Shape} to draw.
+     *
+     * @param shape a {@link Shape}.
+     */
+    public void setShape(@Nullable Shape shape) {
+        this.shape = shape;
+        invalidate();
+    }
+
+    /**
+     * {@link Shape} currently displayed inside the given view.
+     *
+     * @return shape currently displayed.
+     */
+    public Shape getShape() {
+        return shape;
+    }
+
+    /**
+     * Animate the {@link ShapeView} so that user understant available actions.
+     */
+    public void animateActionIndicator() {
+        startAnimation(wiggleAnimation);
+    }
+
     private void init(Context context) {
         initTouchListener();
         dragHelper = DragHelper.getInstance();
@@ -128,6 +138,8 @@ public class ShapeView extends View {
         borderPaint.setStrokeWidth(context.getResources().getDimension(R.dimen.shape_stroke_width));
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setAntiAlias(true);
+
+        wiggleAnimation = AnimationUtils.loadAnimation(context, R.anim.wiggle);
     }
 
     private void initTouchListener() {
