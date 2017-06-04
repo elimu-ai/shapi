@@ -17,6 +17,7 @@ public class FieldView extends FrameLayout {
     private DragHelper dragHelper;
     private Field field;
     private DragListener dragListener;
+    private Listener listener;
 
     /**
      * View used to render the game field to the user.
@@ -61,6 +62,14 @@ public class FieldView extends FrameLayout {
         dragHelper.register(this, dragListener, field.getAvailableShapes());
     }
 
+    /**
+     * Listener used to catch view events.
+     *
+     * @param listener listener used to catch view events.
+     */
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
 
     /**
      * Initialize internal component.
@@ -74,6 +83,15 @@ public class FieldView extends FrameLayout {
                 animateViewBack(source, x, y);
             }
         };
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onEmphasisOnAvailableActionRequested();
+                }
+            }
+        });
     }
 
     private void animateViewBack(View source, float dropX, float dropY) {
@@ -82,6 +100,16 @@ public class FieldView extends FrameLayout {
         source.setAlpha(0.5f);
         source.setVisibility(VISIBLE);
         source.animate().alpha(1f).translationX(0).translationY(0).setDuration(300).setListener(null);
+    }
+
+    /**
+     * Listener used to catch view events.
+     */
+    public interface Listener {
+        /**
+         * Called when the user request emphasis on available actions.
+         */
+        void onEmphasisOnAvailableActionRequested();
     }
 
 }
