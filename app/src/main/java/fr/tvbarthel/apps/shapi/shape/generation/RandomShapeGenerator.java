@@ -15,14 +15,17 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 class RandomShapeGenerator implements ShapeGenerator {
 
     private final Random random;
+    private final float shapeBorderWidth;
 
     /**
      * Create a {@link RandomShapeGenerator}.
      *
      * @param random the {@link Random} that will be used internally to generate shapes.
+     * @param shapeBorderWidth the width of the shape border.
      */
-    RandomShapeGenerator(Random random) {
+    RandomShapeGenerator(Random random, float shapeBorderWidth) {
         this.random = random;
+        this.shapeBorderWidth = shapeBorderWidth;
     }
 
     @Override
@@ -34,16 +37,16 @@ class RandomShapeGenerator implements ShapeGenerator {
     private Shape generateShape(int i) {
         switch (i) {
             case 0:
-                return new Rectangle();
+                return new Rectangle(shapeBorderWidth);
 
             case 1:
-                return new Triangle();
+                return new Triangle(shapeBorderWidth);
 
             case 2:
-                return new Circle();
+                return new Circle(shapeBorderWidth);
 
             case 3:
-                return new Diamond();
+                return new Diamond(shapeBorderWidth);
 
             default:
                 throw new IllegalStateException("Unsupported index. Index must be in range [0;3]");

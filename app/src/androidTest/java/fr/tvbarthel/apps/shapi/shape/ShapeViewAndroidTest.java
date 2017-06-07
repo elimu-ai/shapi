@@ -26,10 +26,12 @@ public class ShapeViewAndroidTest {
     private ShapeView shapeView1;
     private ShapeView shapeView2;
     private ShapeView shapeView3;
+    private float shapeBorderWidth;
 
     @Before
     public void setup() {
         instrumentation = InstrumentationRegistry.getInstrumentation();
+        shapeBorderWidth = instrumentation.getTargetContext().getResources().getDimension(R.dimen.shape_border_width);
         setContentView();
 
         final TestActivity activity = activityRule.getActivity();
@@ -40,7 +42,7 @@ public class ShapeViewAndroidTest {
 
     @Test
     public void drawRectangleShape() {
-        final Rectangle rectangle = new Rectangle();
+        final Rectangle rectangle = new Rectangle(shapeBorderWidth);
         final TestActivity activity = activityRule.getActivity();
         setShape(rectangle);
         Spoon.screenshot(activity, "draw-rectangle");
@@ -48,7 +50,7 @@ public class ShapeViewAndroidTest {
 
     @Test
     public void drawTriangleShape() {
-        final Triangle triangle = new Triangle();
+        final Triangle triangle = new Triangle(shapeBorderWidth);
         final TestActivity activity = activityRule.getActivity();
         setShape(triangle);
         Spoon.screenshot(activity, "draw-triangle");
@@ -56,7 +58,7 @@ public class ShapeViewAndroidTest {
 
     @Test
     public void drawCircleShape() {
-        final Circle circle = new Circle();
+        final Circle circle = new Circle(shapeBorderWidth);
         final TestActivity activity = activityRule.getActivity();
         setShape(circle);
         Spoon.screenshot(activity, "draw-circle");
@@ -64,7 +66,7 @@ public class ShapeViewAndroidTest {
 
     @Test
     public void drawDiamondShape() {
-        final Diamond diamond = new Diamond();
+        final Diamond diamond = new Diamond(shapeBorderWidth);
         final TestActivity activity = activityRule.getActivity();
         setShape(diamond);
         Spoon.screenshot(activity, "draw-diamond");

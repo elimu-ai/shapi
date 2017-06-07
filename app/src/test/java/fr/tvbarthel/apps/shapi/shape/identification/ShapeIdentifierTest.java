@@ -17,6 +17,7 @@ import fr.tvbarthel.apps.shapi.shape.Triangle;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -38,24 +39,24 @@ public class ShapeIdentifierTest {
 
     @Test
     public void identifyShapeCorrectly() {
-        final Rectangle rectangle = new Rectangle();
+        final Rectangle rectangle = mock(Rectangle.class);
         final boolean success = shapeIdentifier.identify(rectangle, Rectangle.class);
         assertTrue(success);
     }
 
     @Test
     public void identifyShapeIncorrectly() {
-        final Triangle triangle = new Triangle();
+        final Triangle triangle = mock(Triangle.class);
         final boolean failure = shapeIdentifier.identify(triangle, Diamond.class);
         assertFalse(failure);
     }
 
     @Test
     public void whenIdentifyAddCorrectlyIdentifiedShape() {
-        final Rectangle rectangle = new Rectangle();
+        final Rectangle rectangle = mock(Rectangle.class);
         shapeIdentifier.identify(rectangle, Rectangle.class);
 
-        final Circle circle = new Circle();
+        final Circle circle = mock(Circle.class);
         shapeIdentifier.identify(circle, Circle.class);
 
         final List<Shape> correctlyIdentifiedShapes = shapeIdentifier.getCorrectlyIdentifiedShapes();
@@ -66,10 +67,10 @@ public class ShapeIdentifierTest {
 
     @Test
     public void whenIdentifyAddIncorrecltyIdentifiedShape() {
-        final Rectangle rectangle = new Rectangle();
+        final Rectangle rectangle = mock(Rectangle.class);
         shapeIdentifier.identify(rectangle, Diamond.class);
 
-        final Diamond diamond = new Diamond();
+        final Diamond diamond = mock(Diamond.class);
         shapeIdentifier.identify(diamond, Triangle.class);
 
         final List<Shape> incorrectlyIdentifiedShapes = shapeIdentifier.getIncorrectlyIdentifiedShapes();
@@ -80,7 +81,7 @@ public class ShapeIdentifierTest {
 
     @Test
     public void whenIdentifyCorrectlyThenTrackEvent() {
-        final Rectangle rectangle = new Rectangle();
+        final Rectangle rectangle = mock(Rectangle.class);
         shapeIdentifier.identify(rectangle, Rectangle.class);
 
         verify(eventTracker).trackShapeCorrectlyIdentified(rectangle);
@@ -88,7 +89,7 @@ public class ShapeIdentifierTest {
 
     @Test
     public void whenIdentifyIncorrectlyThenDoNotTrackEvent() {
-        final Rectangle rectangle = new Rectangle();
+        final Rectangle rectangle = mock(Rectangle.class);
         shapeIdentifier.identify(rectangle, Triangle.class);
 
         verify(eventTracker, never()).trackShapeCorrectlyIdentified(rectangle);

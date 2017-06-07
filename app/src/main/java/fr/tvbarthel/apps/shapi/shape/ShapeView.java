@@ -3,11 +3,9 @@ package fr.tvbarthel.apps.shapi.shape;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,8 +21,6 @@ import fr.tvbarthel.apps.shapi.ui.drag.DragHelper;
 public class ShapeView extends View {
 
     private RectF shapeRect;
-    private Paint backgroundPaint;
-    private Paint borderPaint;
     private Shape shape;
     private DragHelper dragHelper;
     private Animation wiggleAnimation;
@@ -80,7 +76,7 @@ public class ShapeView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (shape != null) {
-            shape.draw(canvas, shapeRect, backgroundPaint, borderPaint);
+            shape.draw(canvas, shapeRect);
         }
     }
 
@@ -125,20 +121,7 @@ public class ShapeView extends View {
     private void init(Context context) {
         initTouchListener();
         dragHelper = DragHelper.getInstance();
-
         shapeRect = new RectF();
-
-        backgroundPaint = new Paint();
-        backgroundPaint.setColor(ContextCompat.getColor(context, R.color.shapeBackgroundColor));
-        backgroundPaint.setStyle(Paint.Style.FILL);
-        backgroundPaint.setAntiAlias(true);
-
-        borderPaint = new Paint();
-        borderPaint.setColor(ContextCompat.getColor(context, R.color.shapeBorderColor));
-        borderPaint.setStrokeWidth(context.getResources().getDimension(R.dimen.shape_stroke_width));
-        borderPaint.setStyle(Paint.Style.STROKE);
-        borderPaint.setAntiAlias(true);
-
         wiggleAnimation = AnimationUtils.loadAnimation(context, R.anim.wiggle);
     }
 
