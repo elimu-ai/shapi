@@ -119,6 +119,7 @@ public class ShapeView extends View {
      * Animate the {@link ShapeView} so that user understant available actions.
      */
     public void animateActionIndicator() {
+        setVisibility(VISIBLE);
         startAnimation(wiggleAnimation);
     }
 
@@ -152,6 +153,11 @@ public class ShapeView extends View {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void setVisibility(int visibility) {
+        super.setVisibility(visibility);
     }
 
     private void startDragMotion() {
