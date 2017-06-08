@@ -27,36 +27,4 @@
         android:layout_gravity="center"
         android:padding="4dp" />
 
-    <fr.tvbarthel.apps.shapi.game.DropZoneView
-        android:id="@+id/activity_main_drop_zone_1"
-        android:layout_width="@dimen/drop_zone_box_width"
-        android:layout_height="@dimen/drop_zone_box_height"
-        android:layout_gravity="start|top"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="?selectableItemBackground" />
-
-    <fr.tvbarthel.apps.shapi.game.DropZoneView
-        android:id="@+id/activity_main_drop_zone_2"
-        android:layout_width="@dimen/drop_zone_box_width"
-        android:layout_height="@dimen/drop_zone_box_height"
-        android:layout_gravity="end|top"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="?selectableItemBackground" />
-
-    <fr.tvbarthel.apps.shapi.game.DropZoneView
-        android:id="@+id/activity_main_drop_zone_3"
-        android:layout_width="@dimen/drop_zone_box_width"
-        android:layout_height="@dimen/drop_zone_box_height"
-        android:layout_gravity="start|bottom"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="?selectableItemBackground" />
-
-    <fr.tvbarthel.apps.shapi.game.DropZoneView
-        android:id="@+id/activity_main_drop_zone_4"
-        android:layout_width="@dimen/drop_zone_box_width"
-        android:layout_height="@dimen/drop_zone_box_height"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="?selectableItemBackground" />
-
 </FrameLayout>
