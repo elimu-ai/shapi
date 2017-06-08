@@ -135,6 +135,12 @@ public class FieldView extends FrameLayout {
                 super.onDragDropped(source, data, x, y);
                 animateViewBack(source, x, y);
             }
+
+            @Override
+            protected void onDragEnded(View source, Object data) {
+                super.onDragEnded(source, data);
+                source.setVisibility(VISIBLE);
+            }
         };
     }
 
