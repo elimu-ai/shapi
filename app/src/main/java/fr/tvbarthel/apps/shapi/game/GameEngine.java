@@ -88,11 +88,11 @@ public class GameEngine {
     private Field generateNewField() {
         final int numberOfCorrectAnswers = getCurrentScore().getNumberOfCorrectAnswers();
         if (numberOfCorrectAnswers == 0) {
-            return fieldGenerator.generateNewField(currentShape, FieldGenerator.LEVEL_1);
+            return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_1);
         } else if (numberOfCorrectAnswers == 1) {
-            return fieldGenerator.generateNewField(currentShape, FieldGenerator.LEVEL_2);
+            return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_2);
         } else {
-            return fieldGenerator.generateNewField(currentShape, FieldGenerator.LEVEL_3);
+            return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_3);
         }
     }
 
