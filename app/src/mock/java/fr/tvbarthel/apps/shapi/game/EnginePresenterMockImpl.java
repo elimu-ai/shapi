@@ -37,10 +37,10 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
         availableShapes.add(Diamond.class);
 
         shapes = new ArrayList<>();
-        shapes.add(new Rectangle());
-        shapes.add(new Triangle());
-        shapes.add(new Circle());
-        shapes.add(new Diamond());
+        shapes.add(new Rectangle(10));
+        shapes.add(new Triangle(10));
+        shapes.add(new Circle(10));
+        shapes.add(new Diamond(10));
 
         ArrayList<DropZone> dropZones = new ArrayList<>();
         dropZones.add(new DropZone(Rectangle.class, availableShapes));

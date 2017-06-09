@@ -42,6 +42,7 @@ public class DropZoneView extends FrameLayout {
     private Interpolator scaleInterpolator;
     private DragHelper dragHelper;
     private DragListener dragListener;
+    private float shapeBorderWidth;
 
     /**
      * Create a {@link DropZoneView}
@@ -101,13 +102,13 @@ public class DropZoneView extends FrameLayout {
     private Shape getShapeForDropZone(DropZone dropZone) {
         final Class<? extends Shape> dropZoneShape = dropZone.getShape();
         if (dropZoneShape == Rectangle.class) {
-            return new Rectangle();
+            return new Rectangle(shapeBorderWidth);
         } else if (dropZoneShape == Triangle.class) {
-            return new Triangle();
+            return new Triangle(shapeBorderWidth);
         } else if (dropZoneShape == Circle.class) {
-            return new Circle();
+            return new Circle(shapeBorderWidth);
         } else if (dropZoneShape == Diamond.class) {
-            return new Diamond();
+            return new Diamond(shapeBorderWidth);
         } else {
             throw new IllegalArgumentException("Unsupported drop zone. Found: " + dropZoneShape);
         }
@@ -151,6 +152,7 @@ public class DropZoneView extends FrameLayout {
 
         scaleInterpolator = new OvershootInterpolator();
         dragHelper = DragHelper.getInstance();
+        shapeBorderWidth = context.getResources().getDimension(R.dimen.shape_border_width);
 
         initializeInternalListeners();
     }

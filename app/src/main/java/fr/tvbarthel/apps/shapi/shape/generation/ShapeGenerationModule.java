@@ -6,6 +6,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import fr.tvbarthel.apps.shapi.R;
+import fr.tvbarthel.apps.shapi.core.ShapiApplication;
 
 /**
  * A {@link Module} for the shape generation package
@@ -15,8 +17,10 @@ public class ShapeGenerationModule {
 
     @Provides
     @Singleton
-    ShapeGenerator provideShapeGenerator() {
+    ShapeGenerator provideShapeGenerator(ShapiApplication shapiApplication) {
         final Random random = new Random();
-        return new RandomShapeGenerator(random);
+        final float shapeBorderWidth = shapiApplication.getResources()
+                .getDimension(R.dimen.shape_border_width);
+        return new RandomShapeGenerator(random, shapeBorderWidth);
     }
 }
