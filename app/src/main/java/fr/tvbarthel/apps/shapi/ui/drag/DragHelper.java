@@ -59,6 +59,7 @@ public final class DragHelper {
      * @param droppableClass class which can be droppable.
      */
     public void register(View area, DragListener listener, List<Class<?>> droppableClass) {
+        listener.reset();
         for (Class<?> droppable : droppableClass) {
             listener.addClassName(droppable.getName());
         }

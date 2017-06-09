@@ -55,6 +55,14 @@ public class DragListener {
     }
 
     /**
+     * Reset internal state.
+     */
+    void reset() {
+        mHandledClassNames.clear();
+        mDraggedItem = null;
+    }
+
+    /**
      * Designed for inheritance.
      *
      * @param source dragged item view source.

@@ -1,6 +1,7 @@
 package fr.tvbarthel.apps.shapi.game;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -32,6 +33,8 @@ public class FieldView extends FrameLayout {
     private OnClickListener internalClickListener;
     private DropZoneView.Listener internalDropZoneListener;
     private FrameLayout dragMask;
+    @LayoutRes
+    private int currentFieldLayout;
 
     /**
      * View used to render the game field to the user.
@@ -73,8 +76,9 @@ public class FieldView extends FrameLayout {
      */
     public void setField(@NonNull Field field) {
         //noinspection unchecked
-        dragHelper.register(dragMask, dragListener, new ArrayList<Class<?>>(field.getAvailableShapes()));
+        updateFieldLayout(field);
         displayDropZones(field.getZones());
+        dragHelper.register(dragMask, dragListener, new ArrayList<Class<?>>(field.getAvailableShapes()));
     }
 
     /**
@@ -90,22 +94,7 @@ public class FieldView extends FrameLayout {
      * Initialize internal component.
      */
     private void initialize(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.field_view, this);
-
         initializeInternalListeners();
-
-        dragMask = ((FrameLayout) findViewById(R.id.field_view_drag_mask));
-        dropZone1 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_1));
-        dropZone2 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_2));
-        dropZone3 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_3));
-        dropZone4 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_4));
-
-        dragMask.setOnClickListener(internalClickListener);
-        dropZone1.setListener(internalDropZoneListener);
-        dropZone2.setListener(internalDropZoneListener);
-        dropZone3.setListener(internalDropZoneListener);
-        dropZone4.setListener(internalDropZoneListener);
-
         dragHelper = DragHelper.getInstance();
     }
 
@@ -146,28 +135,59 @@ public class FieldView extends FrameLayout {
         source.animate().alpha(1f).translationX(0).translationY(0).setDuration(300).setListener(null);
     }
 
+    /**
+     * Used to update the field layout based on the field configuration.
+     *
+     * @param field field from which the layout must be adapted.
+     */
+    private void updateFieldLayout(Field field) {
+        List<DropZone> zones = field.getZones();
+        @LayoutRes int layoutField = R.layout.four_drop_zones_field_view;
+
+        // TODO use a global game level.
+        if (zones.size() == 1) {
+            layoutField = R.layout.one_drop_zones_field_view;
+        } else if (zones.size() == 2) {
+            layoutField = R.layout.two_drop_zones_field_view;
+        } else if (zones.size() == 4) {
+            layoutField = R.layout.four_drop_zones_field_view;
+        }
+
+        if (layoutField != currentFieldLayout) {
+            removeAllViews();
+            LayoutInflater.from(getContext()).inflate(layoutField, this);
+            currentFieldLayout = layoutField;
+            initializeField();
+        }
+    }
+
+    private void initializeField() {
+        dragMask = ((FrameLayout) findViewById(R.id.field_view_drag_mask));
+        dropZone1 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_1));
+        dropZone2 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_2));
+        dropZone3 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_3));
+        dropZone4 = ((DropZoneView) findViewById(R.id.field_view_drop_zone_4));
+
+        dragMask.setOnClickListener(internalClickListener);
+        initializeDropZone(dropZone1);
+        initializeDropZone(dropZone2);
+        initializeDropZone(dropZone3);
+        initializeDropZone(dropZone4);
+    }
+
+    private void initializeDropZone(DropZoneView dropZoneView) {
+        if (dropZoneView != null) {
+            dropZoneView.setListener(internalDropZoneListener);
+        }
+    }
+
     private void displayDropZones(List<DropZone> zones) {
         if (zones.size() == 1) {
-            dropZone1.setVisibility(View.VISIBLE);
-            dropZone2.setVisibility(View.GONE);
-            dropZone3.setVisibility(View.GONE);
-            dropZone4.setVisibility(View.GONE);
-
             dropZone1.setDropZone(zones.get(0));
         } else if (zones.size() == 2) {
-            dropZone1.setVisibility(View.VISIBLE);
-            dropZone2.setVisibility(View.VISIBLE);
-            dropZone3.setVisibility(View.GONE);
-            dropZone4.setVisibility(View.GONE);
-
             dropZone1.setDropZone(zones.get(0));
             dropZone2.setDropZone(zones.get(1));
         } else if (zones.size() == 4) {
-            dropZone1.setVisibility(View.VISIBLE);
-            dropZone2.setVisibility(View.VISIBLE);
-            dropZone3.setVisibility(View.VISIBLE);
-            dropZone4.setVisibility(View.VISIBLE);
-
             dropZone1.setDropZone(zones.get(0));
             dropZone2.setDropZone(zones.get(1));
             dropZone3.setDropZone(zones.get(2));
