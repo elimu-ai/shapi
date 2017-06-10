@@ -149,6 +149,7 @@ public class DropZoneView extends FrameLayout {
         ShapiApplication.component().inject(this);
 
         shapeView = ((ShapeView) findViewById(R.id.view_drop_zone_box_internal_shape));
+        shapeView.setEnabled(false);
 
         scaleInterpolator = new OvershootInterpolator();
         dragHelper = DragHelper.getInstance();
