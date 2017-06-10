@@ -14,26 +14,6 @@ import fr.tvbarthel.apps.shapi.shape.Shape;
  */
 class FieldGenerator {
 
-    /**
-     * The level 1 contains only 1 {@link DropZone}: the {@link DropZone}
-     * of the current {@link Shape} to identify.
-     */
-    static final int LEVEL_1 = 1;
-
-    /**
-     * The level 2 contains 2 {@link DropZone}s: the {@link DropZone}
-     * of the current {@link Shape} to identify and 1 extra {@link DropZone}
-     * of another type.
-     */
-    static final int LEVEL_2 = 2;
-
-    /**
-     * The level 3 contains 4 {@link DropZone}s: the {@link DropZone}
-     * of the current {@link Shape} to identify and 3 extra {@link DropZone}s
-     * of other types.
-     */
-    static final int LEVEL_3 = 3;
-
     private final List<Class<? extends Shape>> availableShapes;
 
     /**
@@ -47,26 +27,32 @@ class FieldGenerator {
     }
 
     /**
-     * Generate a new {@link Field}.
+     * Generate a new {@link Field} according to the
+     * {@link fr.tvbarthel.apps.shapi.game.GameLevels.Level}.
      * <p>
-     * <b>See</b> {@link FieldGenerator#LEVEL_1}
-     * <b>See</b> {@link FieldGenerator#LEVEL_2}
-     * <b>See</b> {@link FieldGenerator#LEVEL_3}
+     * Here are the specification of the {@link Field}
+     * generated:
+     * <p>
+     * - for the {@link fr.tvbarthel.apps.shapi.game.GameLevels#LEVEL_1}: one drop zone
+     * - for the {@link fr.tvbarthel.apps.shapi.game.GameLevels#LEVEL_2}: two drop zones
+     * - for the {@link fr.tvbarthel.apps.shapi.game.GameLevels#LEVEL_3}: four drop zones
+     * - for the {@link fr.tvbarthel.apps.shapi.game.GameLevels#LEVEL_4}: four drop zones
      *
      * @param currentShapeToIdentify the current {@link Shape} to identify.
-     * @param level                  the target level.
+     * @param level                  the {@link fr.tvbarthel.apps.shapi.game.GameLevels.Level}.
      * @return a newly created {@link Field}.
      */
-    Field generateNewField(Shape currentShapeToIdentify, int level) {
+    Field generateNewField(Shape currentShapeToIdentify, @GameLevels.Level int level) {
         switch (level) {
-            case LEVEL_1:
-                return generateFieldLevel1(currentShapeToIdentify);
+            case GameLevels.LEVEL_1:
+                return generateFieldWithOneDropZone(currentShapeToIdentify, level);
 
-            case LEVEL_2:
-                return generateFieldLevel2(currentShapeToIdentify);
+            case GameLevels.LEVEL_2:
+                return generateFieldWithTwoDropZones(currentShapeToIdentify, level);
 
-            case LEVEL_3:
-                return generateFieldLevel3(currentShapeToIdentify);
+            case GameLevels.LEVEL_3:
+            case GameLevels.LEVEL_4:
+                return generateFieldWithFourDropZones(currentShapeToIdentify, level);
 
             default:
                 throw new IllegalArgumentException("Unsupported level. Found: " + level);
@@ -74,14 +60,14 @@ class FieldGenerator {
     }
 
     @NonNull
-    private Field generateFieldLevel1(Shape currentShapeToIdentify) {
+    private Field generateFieldWithOneDropZone(Shape currentShapeToIdentify, int level) {
         final ArrayList<DropZone> dropZones = new ArrayList<>(1);
         dropZones.add(new DropZone(currentShapeToIdentify.getClass(), availableShapes));
-        return new Field(dropZones, availableShapes);
+        return new Field(dropZones, availableShapes, level);
     }
 
     @NonNull
-    private Field generateFieldLevel2(Shape currentShapeToIdentify) {
+    private Field generateFieldWithTwoDropZones(Shape currentShapeToIdentify, int level) {
         if (availableShapes.size() < 2) {
             throw new IllegalStateException("Must have at least 2 available shapes to create a field of level 2");
         }
@@ -98,10 +84,10 @@ class FieldGenerator {
 
         Collections.shuffle(dropZones);
 
-        return new Field(dropZones, availableShapes);
+        return new Field(dropZones, availableShapes, level);
     }
 
-    private Field generateFieldLevel3(Shape currentShapeToIdentify) {
+    private Field generateFieldWithFourDropZones(Shape currentShapeToIdentify, int level) {
         if (availableShapes.size() < 4) {
             throw new IllegalStateException("Must have at least 4 available shapes to create a field of level 2");
         }
@@ -122,7 +108,7 @@ class FieldGenerator {
 
         Collections.shuffle(dropZones);
 
-        return new Field(dropZones, availableShapes);
+        return new Field(dropZones, availableShapes, level);
     }
 
 

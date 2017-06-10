@@ -48,7 +48,7 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
         dropZones.add(new DropZone(Circle.class, availableShapes));
         dropZones.add(new DropZone(Diamond.class, availableShapes));
 
-        gameField = new Field(dropZones, availableShapes);
+        gameField = new Field(dropZones, availableShapes, GameLevels.LEVEL_4);
 
         random = new Random(System.currentTimeMillis());
     }

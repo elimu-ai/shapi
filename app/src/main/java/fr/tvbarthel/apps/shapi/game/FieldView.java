@@ -147,15 +147,15 @@ public class FieldView extends FrameLayout {
      * @param field field from which the layout must be adapted.
      */
     private void updateFieldLayout(Field field) {
-        List<DropZone> zones = field.getZones();
         @LayoutRes int layoutField = R.layout.four_drop_zones_field_view;
+        final int gameLevel = field.getGameLevel();
 
-        // TODO use a global game level.
-        if (zones.size() == 1) {
+        if (gameLevel == GameLevels.LEVEL_1) {
             layoutField = R.layout.one_drop_zones_field_view;
-        } else if (zones.size() == 2) {
+        } else if (gameLevel == GameLevels.LEVEL_2) {
             layoutField = R.layout.two_drop_zones_field_view;
-        } else if (zones.size() == 4) {
+        } else if (gameLevel == GameLevels.LEVEL_3
+                || gameLevel == GameLevels.LEVEL_4) {
             layoutField = R.layout.four_drop_zones_field_view;
         }
 
