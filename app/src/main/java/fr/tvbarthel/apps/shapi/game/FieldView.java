@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -35,6 +37,10 @@ public class FieldView extends FrameLayout {
     private FrameLayout dragMask;
     @LayoutRes
     private int currentFieldLayout;
+    private int dropAnimationDuration;
+    private Animation dropSuccessAnimation;
+    private Animation dropFailureAnimation;
+    private DropZoneView droppedZone;
 
     /**
      * View used to render the game field to the user.
@@ -91,9 +97,33 @@ public class FieldView extends FrameLayout {
     }
 
     /**
+     * Display a visual feedback for a successful play.
+     *
+     * @return animation started, can be used to register a listener.
+     */
+    public Animation startSuccessAnimation() {
+        droppedZone.startAnimation(dropSuccessAnimation);
+        return dropSuccessAnimation;
+    }
+
+    /**
+     * * Display a visual feedback for a miss play.
+     *
+     * @return animation started, can be used to register a listener.
+     */
+    public Animation startFailureAnimation() {
+        droppedZone.startAnimation(dropFailureAnimation);
+        return dropFailureAnimation;
+    }
+
+    /**
      * Initialize internal component.
      */
     private void initialize(Context context) {
+        dropSuccessAnimation = AnimationUtils.loadAnimation(context, R.anim.drop_success);
+        dropFailureAnimation = AnimationUtils.loadAnimation(context, R.anim.drop_failure);
+        dropAnimationDuration = context.getResources().getInteger(R.integer.drop_animation_duration);
+
         initializeInternalListeners();
         dragHelper = DragHelper.getInstance();
     }
@@ -112,7 +142,8 @@ public class FieldView extends FrameLayout {
         internalDropZoneListener = new DropZoneView.Listener() {
 
             @Override
-            public void onShapeDropped(@NonNull DropZone dropZone, @Nullable Shape shape) {
+            public void onShapeDropped(DropZoneView dropZoneView, @NonNull DropZone dropZone, @Nullable Shape shape) {
+                droppedZone = dropZoneView;
                 if (listener != null) {
                     listener.onShapeDropped(dropZone, shape);
                 }
@@ -138,7 +169,13 @@ public class FieldView extends FrameLayout {
         source.setTranslationY(dropY - (source.getY() + source.getHeight() / 2));
         source.setAlpha(0.5f);
         source.setVisibility(VISIBLE);
-        source.animate().alpha(1f).translationX(0).translationY(0).setDuration(300).setListener(null);
+        source.animate()
+                .alpha(1f)
+                .translationX(0)
+                .translationY(0)
+                .setStartDelay(0)
+                .setDuration(300)
+                .setListener(null);
     }
 
     /**

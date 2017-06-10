@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.animation.Animation;
 
 import javax.inject.Inject;
 
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
 
     private Shape playedShape;
     private FieldView fieldView;
+    private Animation.AnimationListener nextRoundOnAnimationEnd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +50,23 @@ public class MainActivity extends AppCompatActivity
 
         ShapiApplication.component().inject(this);
         gamePresenter.attachView(this);
+
+        nextRoundOnAnimationEnd = new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                gamePresenter.nextRound();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        };
     }
 
     @Override
@@ -93,6 +111,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void displayRightAnswer() {
+        shapeView.hide();
+        fieldView.startSuccessAnimation().setAnimationListener(nextRoundOnAnimationEnd);
+    }
+
+    @Override
+    public void displayWrongAnswer() {
+        shapeView.hide();
+        fieldView.startFailureAnimation().setAnimationListener(nextRoundOnAnimationEnd);
+    }
+
+    @Override
     public void onShapeDropped(@NonNull DropZone dropZone, @Nullable Shape shape) {
         gamePresenter.computeScore(dropZone, playedShape);
     }
@@ -104,12 +134,12 @@ public class MainActivity extends AppCompatActivity
 
     private void hideShape(Shape shape) {
         playedShape = shape;
-        shapeView.setVisibility(View.INVISIBLE);
+        shapeView.hide();
     }
 
     private void showShape(Shape shape) {
         playedShape = shape;
-        shapeView.setVisibility(View.VISIBLE);
+        shapeView.show();
         shapeView.setShape(shape);
     }
 

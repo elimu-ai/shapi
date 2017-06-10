@@ -79,7 +79,12 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
     public void computeScore(DropZone zone, Shape shape) {
         boolean correct = zone.getShape().isInstance(shape);
         updateScore(correct);
+        showAnswer(correct);
         generateNextShape(correct, shape);
+    }
+
+    @Override
+    public void nextRound() {
         updateGameView();
     }
 
@@ -123,6 +128,16 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
             currentPlayedShape = shapes.get(random.nextInt(4));
         } else {
             currentPlayedShape = shape;
+        }
+    }
+
+    private void showAnswer(boolean correct) {
+        if (view != null) {
+            if (correct) {
+                view.displayRightAnswer();
+            } else {
+                view.displayWrongAnswer();
+            }
         }
     }
 
