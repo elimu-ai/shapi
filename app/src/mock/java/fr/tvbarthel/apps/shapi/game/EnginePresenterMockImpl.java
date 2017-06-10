@@ -36,17 +36,20 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
         availableShapes.add(Circle.class);
         availableShapes.add(Diamond.class);
 
+        @GameLevels.Level
+        final int level = GameLevels.LEVEL_1;
+
         shapes = new ArrayList<>();
-        shapes.add(new Rectangle(10));
-        shapes.add(new Triangle(10));
-        shapes.add(new Circle(10));
-        shapes.add(new Diamond(10));
+        shapes.add(Rectangle.create(level, 10));
+        shapes.add(Triangle.create(level, 10));
+        shapes.add(Circle.create(level, 10));
+        shapes.add(Diamond.create(level, 10));
 
         ArrayList<DropZone> dropZones = new ArrayList<>();
-        dropZones.add(new DropZone(Rectangle.class, availableShapes));
-        dropZones.add(new DropZone(Triangle.class, availableShapes));
-        dropZones.add(new DropZone(Circle.class, availableShapes));
-        dropZones.add(new DropZone(Diamond.class, availableShapes));
+        dropZones.add(new DropZone(Rectangle.class, availableShapes, level));
+        dropZones.add(new DropZone(Triangle.class, availableShapes, level));
+        dropZones.add(new DropZone(Circle.class, availableShapes, level));
+        dropZones.add(new DropZone(Diamond.class, availableShapes, level));
 
         gameField = new Field(dropZones, availableShapes, GameLevels.LEVEL_4);
 

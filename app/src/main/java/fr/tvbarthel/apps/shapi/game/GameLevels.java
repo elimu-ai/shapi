@@ -19,22 +19,22 @@ public final class GameLevels {
     /**
      * The level 1.
      */
-    static final int LEVEL_1 = 1;
+    public static final int LEVEL_1 = 1;
 
     /**
      * The level 2.
      */
-    static final int LEVEL_2 = 2;
+    public static final int LEVEL_2 = 2;
 
     /**
      * The level 3.
      */
-    static final int LEVEL_3 = 3;
+    public static final int LEVEL_3 = 3;
 
     /**
      * The level 4.
      */
-    static final int LEVEL_4 = 4;
+    public static final int LEVEL_4 = 4;
 
     private GameLevels() {
         //no instance

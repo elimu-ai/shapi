@@ -102,13 +102,13 @@ public class DropZoneView extends FrameLayout {
     private Shape getShapeForDropZone(DropZone dropZone) {
         final Class<? extends Shape> dropZoneShape = dropZone.getShape();
         if (dropZoneShape == Rectangle.class) {
-            return new Rectangle(shapeBorderWidth);
+            return Rectangle.create(dropZone.getGameLevel(), shapeBorderWidth);
         } else if (dropZoneShape == Triangle.class) {
-            return new Triangle(shapeBorderWidth);
+            return Triangle.create(dropZone.getGameLevel(), shapeBorderWidth);
         } else if (dropZoneShape == Circle.class) {
-            return new Circle(shapeBorderWidth);
+            return Circle.create(dropZone.getGameLevel(), shapeBorderWidth);
         } else if (dropZoneShape == Diamond.class) {
-            return new Diamond(shapeBorderWidth);
+            return Diamond.create(dropZone.getGameLevel(), shapeBorderWidth);
         } else {
             throw new IllegalArgumentException("Unsupported drop zone. Found: " + dropZoneShape);
         }

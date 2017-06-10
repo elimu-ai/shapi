@@ -62,7 +62,7 @@ class FieldGenerator {
     @NonNull
     private Field generateFieldWithOneDropZone(Shape currentShapeToIdentify, int level) {
         final ArrayList<DropZone> dropZones = new ArrayList<>(1);
-        dropZones.add(new DropZone(currentShapeToIdentify.getClass(), availableShapes));
+        dropZones.add(new DropZone(currentShapeToIdentify.getClass(), availableShapes, level));
         return new Field(dropZones, availableShapes, level);
     }
 
@@ -79,8 +79,8 @@ class FieldGenerator {
         availableShapes.add(currentShapeClass);
 
         final ArrayList<DropZone> dropZones = new ArrayList<>(2);
-        dropZones.add(new DropZone(currentShapeClass, availableShapes));
-        dropZones.add(new DropZone(candidate, availableShapes));
+        dropZones.add(new DropZone(currentShapeClass, availableShapes, level));
+        dropZones.add(new DropZone(candidate, availableShapes, level));
 
         Collections.shuffle(dropZones);
 
@@ -101,10 +101,10 @@ class FieldGenerator {
         availableShapes.add(currentShapeClass);
 
         final ArrayList<DropZone> dropZones = new ArrayList<>(4);
-        dropZones.add(new DropZone(currentShapeClass, availableShapes));
-        dropZones.add(new DropZone(candidate1, availableShapes));
-        dropZones.add(new DropZone(candidate2, availableShapes));
-        dropZones.add(new DropZone(candidate3, availableShapes));
+        dropZones.add(new DropZone(currentShapeClass, availableShapes, level));
+        dropZones.add(new DropZone(candidate1, availableShapes, level));
+        dropZones.add(new DropZone(candidate2, availableShapes, level));
+        dropZones.add(new DropZone(candidate3, availableShapes, level));
 
         Collections.shuffle(dropZones);
 
