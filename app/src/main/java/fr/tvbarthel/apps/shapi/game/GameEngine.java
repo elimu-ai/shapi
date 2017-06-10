@@ -11,6 +11,9 @@ import fr.tvbarthel.apps.shapi.shape.identification.ShapeIdentifier;
  */
 public class GameEngine {
 
+    private static final int RIGHT_ANSWERS_BEFORE_LEVEL_2 = 2;
+    private static final int RIGHT_ANSWERS_BEFORE_LEVEL_3 = 6;
+
     private final ShapeIdentifier shapeIdentifier;
     private final ShapeGenerator shapeGenerator;
     private final AudioEffectEngine audioEffectEngine;
@@ -97,9 +100,9 @@ public class GameEngine {
 
     private Field generateNewField() {
         final int numberOfCorrectAnswers = getCurrentScore().getNumberOfCorrectAnswers();
-        if (numberOfCorrectAnswers == 0) {
+        if (numberOfCorrectAnswers < RIGHT_ANSWERS_BEFORE_LEVEL_2) {
             return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_1);
-        } else if (numberOfCorrectAnswers == 1) {
+        } else if (numberOfCorrectAnswers < RIGHT_ANSWERS_BEFORE_LEVEL_3) {
             return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_2);
         } else {
             return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_3);
