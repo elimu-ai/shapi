@@ -8,7 +8,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_box_smilling"
+        android:layout_marginTop="@dimen/drop_zone_box_internal_icon_margin_top"
+        android:src="@drawable/man_happy"
         tools:ignore="ContentDescription" />
 
     <fr.tvbarthel.apps.shapi.shape.ShapeView
