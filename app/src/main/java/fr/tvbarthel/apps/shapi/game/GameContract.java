@@ -56,6 +56,12 @@ public interface GameContract {
          * @param shape shape dropped by the user.
          */
         void computeScore(DropZone zone, Shape shape);
+
+        /**
+         * Reset this {@link Presenter}
+         * and its internal components.
+         */
+        void reset();
     }
 
     /**
