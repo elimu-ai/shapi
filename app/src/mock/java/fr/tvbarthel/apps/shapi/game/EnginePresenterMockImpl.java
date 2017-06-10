@@ -83,6 +83,11 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
         updateGameView();
     }
 
+    @Override
+    public void reset() {
+
+    }
+
     private void initializeGame() {
         initializeShapes();
         initializeField();

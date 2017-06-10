@@ -61,4 +61,13 @@ public class ShapeIdentifier {
     public List<Shape> getIncorrectlyIdentifiedShapes() {
         return new ArrayList<>(shapeIncorrectlyIdentified);
     }
+
+    /**
+     * Reset this {@link ShapeIdentifier} to its
+     * initial state.
+     */
+    public void reset() {
+        shapeCorrectlyIdentified.clear();
+        shapeIncorrectlyIdentified.clear();
+    }
 }

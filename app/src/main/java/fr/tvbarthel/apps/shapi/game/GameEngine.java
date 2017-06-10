@@ -85,6 +85,16 @@ public class GameEngine {
         return currentField;
     }
 
+    /**
+     * Reset this {@link GameEngine}
+     * to its initial state.
+     */
+    public void reset() {
+        shapeIdentifier.reset();
+        this.currentShape = this.shapeGenerator.generate();
+        this.currentField = generateNewField();
+    }
+
     private Field generateNewField() {
         final int numberOfCorrectAnswers = getCurrentScore().getNumberOfCorrectAnswers();
         if (numberOfCorrectAnswers == 0) {

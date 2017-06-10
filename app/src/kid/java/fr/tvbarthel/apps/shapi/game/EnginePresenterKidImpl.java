@@ -51,6 +51,11 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
         showDropZones();
     }
 
+    @Override
+    public void reset() {
+        gameEngine.reset();
+    }
+
     private void showCurrentShapeToIdentify() {
         view.displayShape(gameEngine.getCurrentShapeToIdentify(), true);
     }
