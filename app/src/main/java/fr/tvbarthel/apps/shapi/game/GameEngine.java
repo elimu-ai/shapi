@@ -13,6 +13,7 @@ public class GameEngine {
 
     private static final int RIGHT_ANSWERS_BEFORE_LEVEL_2 = 2;
     private static final int RIGHT_ANSWERS_BEFORE_LEVEL_3 = 6;
+    private static final int RIGHT_ANSWERS_BEFORE_LEVEL_4 = 10;
 
     private final ShapeIdentifier shapeIdentifier;
     private final ShapeGenerator shapeGenerator;
@@ -36,8 +37,9 @@ public class GameEngine {
         this.audioEffectEngine = audioEffectEngine;
         this.fieldGenerator = fieldGenerator;
 
-        this.currentShape = this.shapeGenerator.generate();
-        this.currentField = generateNewField();
+        final int currentGameLevel = getCurrentGameLevel();
+        this.currentShape = this.shapeGenerator.generate(currentGameLevel);
+        this.currentField = this.fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_1);
     }
 
     /**
@@ -60,8 +62,9 @@ public class GameEngine {
     boolean identifyCurrentShape(Class<? extends Shape> classz) {
         if (shapeIdentifier.identify(currentShape, classz)) {
             audioEffectEngine.play(AudioEffects.AUDIO_EFFECT_ID_SUCCESS);
-            currentShape = shapeGenerator.generate();
-            currentField = generateNewField();
+            final int currentGameLevel = getCurrentGameLevel();
+            currentShape = shapeGenerator.generate(currentGameLevel);
+            currentField = fieldGenerator.generateNewField(currentShape, currentGameLevel);
             return true;
         } else {
             audioEffectEngine.play(AudioEffects.AUDIO_EFFECT_ID_FAILURE);
@@ -94,20 +97,23 @@ public class GameEngine {
      */
     public void reset() {
         shapeIdentifier.reset();
-        this.currentShape = this.shapeGenerator.generate();
-        this.currentField = generateNewField();
+        final int currentGameLevel = getCurrentGameLevel();
+        this.currentShape = shapeGenerator.generate(currentGameLevel);
+        this.currentField = fieldGenerator.generateNewField(currentShape, currentGameLevel);
     }
 
-    private Field generateNewField() {
+    @GameLevels.Level
+    private int getCurrentGameLevel() {
         final int numberOfCorrectAnswers = getCurrentScore().getNumberOfCorrectAnswers();
         if (numberOfCorrectAnswers < RIGHT_ANSWERS_BEFORE_LEVEL_2) {
-            return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_1);
+            return GameLevels.LEVEL_1;
         } else if (numberOfCorrectAnswers < RIGHT_ANSWERS_BEFORE_LEVEL_3) {
-            return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_2);
+            return GameLevels.LEVEL_2;
+        } else if (numberOfCorrectAnswers < RIGHT_ANSWERS_BEFORE_LEVEL_4) {
+            return GameLevels.LEVEL_3;
         } else {
-            return fieldGenerator.generateNewField(currentShape, GameLevels.LEVEL_3);
+            return GameLevels.LEVEL_4;
         }
     }
-
 
 }

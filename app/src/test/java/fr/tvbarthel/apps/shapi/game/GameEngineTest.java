@@ -16,6 +16,7 @@ import fr.tvbarthel.apps.shapi.shape.generation.ShapeGenerator;
 import fr.tvbarthel.apps.shapi.shape.identification.ShapeIdentifier;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -60,10 +61,11 @@ public class GameEngineTest {
         assertEquals(2, currentScore.getNumberOfIncorrectAnswers());
     }
 
+    @SuppressWarnings("WrongConstant")
     @Test
     public void currentShape() {
         // Given
-        given(shapeGenerator.generate()).willReturn(rectangleShape);
+        given(shapeGenerator.generate(anyInt())).willReturn(rectangleShape);
 
         // When
         final Shape currentShapeToIdentify = createGameEngine().getCurrentShapeToIdentify();
@@ -72,10 +74,11 @@ public class GameEngineTest {
         assertEquals(rectangleShape, currentShapeToIdentify);
     }
 
+    @SuppressWarnings("WrongConstant")
     @Test
     public void whenIdentifyShapeCorrectlyThenPlaySuccess() {
         // Given
-        given(shapeGenerator.generate()).willReturn(rectangleShape);
+        given(shapeGenerator.generate(anyInt())).willReturn(rectangleShape);
         given(shapeIdentifier.identify(rectangleShape, Rectangle.class)).willReturn(true);
 
         // When
@@ -85,10 +88,11 @@ public class GameEngineTest {
         verify(audioEffectEngine).play(AudioEffects.AUDIO_EFFECT_ID_SUCCESS);
     }
 
+    @SuppressWarnings("WrongConstant")
     @Test
     public void whenIdentifyShapeIncorrectlyThenPlayFailure() {
         // Given
-        given(shapeGenerator.generate()).willReturn(rectangleShape);
+        given(shapeGenerator.generate(anyInt())).willReturn(rectangleShape);
         given(shapeIdentifier.identify(rectangleShape, Rectangle.class)).willReturn(true);
 
         // When

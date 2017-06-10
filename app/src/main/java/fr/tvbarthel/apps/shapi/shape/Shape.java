@@ -10,6 +10,16 @@ import android.graphics.RectF;
 public abstract class Shape {
 
     /**
+     * A default color for the {@link Shape}
+     */
+    public static final int DEFAULT_COLOR = Colors.rgb(0xb1, 0x7a, 0xba);
+
+    /**
+     * A default color for the border of a {@link Shape}.
+     */
+    public static final int DEFAULT_BORDER_COLOR = Colors.rgb(0x7c, 0x3e, 0x93);
+
+    /**
      * The {@link Paint} that should be used to draw the shape.
      */
     protected final Paint shapePaint;
