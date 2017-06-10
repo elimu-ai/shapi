@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setTitle("");
+
         shapeView = ((ShapeView) findViewById(R.id.activity_main_shape));
         fieldView = ((FieldView) findViewById(R.id.activity_main_field_view));
         fieldView.setListener(this);
