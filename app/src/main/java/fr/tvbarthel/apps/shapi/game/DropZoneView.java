@@ -125,7 +125,7 @@ public class DropZoneView extends FrameLayout {
     private void onShapeDropped(Shape data) {
         animateScale(1.0f);
         if (listener != null) {
-            listener.onShapeDropped(dropZone, data);
+            listener.onShapeDropped(this, dropZone, data);
         }
     }
 
@@ -189,10 +189,11 @@ public class DropZoneView extends FrameLayout {
         /**
          * Called when the user dropped a shape in the given drop zone.
          *
-         * @param dropZone zone in which the user dropped the shape.
-         * @param shape    shape dropped by the user.
+         * @param dropZoneView drop view in which the shape was dropped.
+         * @param dropZone     zone in which the user dropped the shape.
+         * @param shape        shape dropped by the user.
          */
-        void onShapeDropped(@NonNull DropZone dropZone, @Nullable Shape shape);
+        void onShapeDropped(DropZoneView dropZoneView, @NonNull DropZone dropZone, @Nullable Shape shape);
     }
 
 }

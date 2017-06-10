@@ -24,6 +24,7 @@ public class ShapeView extends View {
     private Shape shape;
     private DragHelper dragHelper;
     private Animation wiggleAnimation;
+    private boolean hidden;
 
     /**
      * A {@link View} responsible of drawing a {@link Shape}
@@ -112,6 +113,24 @@ public class ShapeView extends View {
     }
 
     /**
+     * Hide the shape to the user.
+     * See also: {@link ShapeView#show()}
+     */
+    public void hide() {
+        hidden = true;
+        setVisibility(INVISIBLE);
+    }
+
+    /**
+     * Show the shape to the user.
+     * See also: {@link ShapeView#hide()}
+     */
+    public void show() {
+        hidden = false;
+        setVisibility(VISIBLE);
+    }
+
+    /**
      * Animate the {@link ShapeView} so that user understant available actions.
      */
     public void animateActionIndicator() {
@@ -124,6 +143,7 @@ public class ShapeView extends View {
         dragHelper = DragHelper.getInstance();
         shapeRect = new RectF();
         wiggleAnimation = AnimationUtils.loadAnimation(context, R.anim.wiggle);
+        hidden = false;
     }
 
     private void initTouchListener() {
@@ -142,7 +162,11 @@ public class ShapeView extends View {
 
     @Override
     public void setVisibility(int visibility) {
-        super.setVisibility(visibility);
+        if (hidden && visibility == VISIBLE) {
+            return;
+        } else {
+            super.setVisibility(visibility);
+        }
     }
 
     private void startDragMotion() {

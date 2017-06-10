@@ -51,11 +51,20 @@ public interface GameContract {
          * <p>
          * Must compute the score for the given play and spawn a new shape if the identification
          * was successful or respawn the same shape if the identification was wrong.
+         * <p>
+         * See also:
+         * {@link View#displayRightAnswer()}
+         * {@link View#displayWrongAnswer()}
          *
          * @param zone  zone where the user drop the shape.
          * @param shape shape dropped by the user.
          */
         void computeScore(DropZone zone, Shape shape);
+
+        /**
+         * Called when the user wants to go to the next round.
+         */
+        void nextRound();
 
         /**
          * Reset this {@link Presenter}
@@ -91,5 +100,16 @@ public interface GameContract {
          * @param shown true if the shape must be shown to the user, false if the shape must be hidden.
          */
         void displayShape(Shape shape, boolean shown);
+
+        /**
+         * Called when a successful feedback must be displayed to the user after a right answer.
+         */
+        void displayRightAnswer();
+
+
+        /**
+         * Called when a failure feedback must be displayed to the user after a wrong answer.
+         */
+        void displayWrongAnswer();
     }
 }

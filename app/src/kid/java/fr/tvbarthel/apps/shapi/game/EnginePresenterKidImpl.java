@@ -45,8 +45,13 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
 
     @Override
     public void computeScore(DropZone zone, Shape shape) {
-        gameEngine.identifyCurrentShape(zone.getShape());
+        boolean correct = gameEngine.identifyCurrentShape(zone.getShape());
+        showAnswer(correct);
         showCurrentScore();
+    }
+
+    @Override
+    public void nextRound() {
         showCurrentShapeToIdentify();
         showDropZones();
     }
@@ -67,5 +72,15 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
 
     private void showDropZones() {
         view.displayField(gameEngine.getCurrentField());
+    }
+
+    private void showAnswer(boolean correct) {
+        if (view != null) {
+            if (correct) {
+                view.displayRightAnswer();
+            } else {
+                view.displayWrongAnswer();
+            }
+        }
     }
 }
