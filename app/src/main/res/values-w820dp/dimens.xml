@@ -5,4 +5,13 @@
     <dimen name="activity_horizontal_margin">64dp</dimen>
 
     <dimen name="shape_size">150dp</dimen>
+    <dimen name="shape_border_width">4dp</dimen>
+
+    <dimen name="drop_zone_box_width">180dp</dimen>
+    <dimen name="drop_zone_box_height">180dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_padding">4dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_width">80dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_height">80dp</dimen>
+    <dimen name="drop_zone_box_internal_icon_margin_top">30dp</dimen>
+    <dimen name="drop_zone_box_internal_shape_margin_top">0dp</dimen>
 </resources>
