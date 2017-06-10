@@ -130,8 +130,10 @@ public class ShapeView extends View {
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    startDragMotion();
+                if (isEnabled()) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        startDragMotion();
+                    }
                 }
                 return false;
             }
