@@ -14,12 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/activity_main_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top" />
-
     <fr.tvbarthel.apps.shapi.shape.ShapeView
         android:id="@+id/activity_main_shape"
         android:layout_width="@dimen/shape_size"

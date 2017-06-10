@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity
     @Inject
     protected GameContract.Presenter gamePresenter;
 
-    private TextView score;
     private ShapeView shapeView;
 
     private Shape playedShape;
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        score = ((TextView) findViewById(R.id.activity_main_score));
         shapeView = ((ShapeView) findViewById(R.id.activity_main_shape));
         fieldView = ((FieldView) findViewById(R.id.activity_main_field_view));
         fieldView.setListener(this);
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void displayScore(int right, int wrong) {
-        score.setText("Score: " + right + " | " + wrong);
+
     }
 
     @Override
