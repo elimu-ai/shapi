@@ -13,7 +13,7 @@
         android:layout_width="@dimen/drop_zone_box_width"
         android:layout_height="@dimen/drop_zone_box_height"
         android:layout_gravity="center_vertical|end"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:padding="@dimen/drop_zone_padding"
         android:background="?selectableItemBackground" />
 
 </merge>

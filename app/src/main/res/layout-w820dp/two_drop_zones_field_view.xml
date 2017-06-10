@@ -13,15 +13,15 @@
         android:layout_width="@dimen/drop_zone_box_width"
         android:layout_height="@dimen/drop_zone_box_height"
         android:layout_gravity="center_vertical|end"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="?selectableItemBackground" />
+        android:background="?selectableItemBackground"
+        android:padding="@dimen/drop_zone_padding" />
 
     <fr.tvbarthel.apps.shapi.game.DropZoneView
         android:id="@+id/field_view_drop_zone_2"
         android:layout_width="@dimen/drop_zone_box_width"
         android:layout_height="@dimen/drop_zone_box_height"
         android:layout_gravity="center_vertical|start"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="?selectableItemBackground" />
+        android:background="?selectableItemBackground"
+        android:padding="@dimen/drop_zone_padding" />
 
 </merge>
