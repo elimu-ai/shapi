@@ -1,11 +1,14 @@
 apply plugin: 'com.android.application'
+apply from: '../config/quality.gradle'
+apply plugin: 'spoon'
+
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "fr.tvbarthel.apps.shapi"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -17,13 +20,55 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // engine: implementation of the game engine
+    flavorDimensions 'engine'
+
+    productFlavors {
+
+        // game engine completely mock
+        mock {
+            dimension 'engine'
+            applicationIdSuffix 'mock'
+        }
+
+        // game engine currently used for children.
+        kid {
+            dimension 'engine'
+        }
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (names.contains("mock") && variant.buildType.name == "release") {
+            variant.ignore = true
+        }
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    compile 'com.google.dagger:dagger:2.11'
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
+    compile 'org.literacyapp.analytics:eventtracker:1.0.4'
+    compile 'org.literacyapp:literacyapp-model:1.1.49'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.8.9'
+
+    androidTestCompile 'org.mockito:mockito-android:2.8.9'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.6.4'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
+}
+
+spoon {
+    debug = true
+    grantAllPermissions = true
+    noAnimations = true
 }

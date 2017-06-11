@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <suppress files="R.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="BuildConfig.java" checks="[a-zA-Z0-9]*" />
+    <suppress files="[a-zA-Z0-9]*Test.java" checks="[a-zA-Z0-9]*" />
+
+    <!-- public APIs for dagger -->
+    <suppress files="AudioEffectModule.java" checks="JavadocMethod" />
+    <suppress files="EngineModule.java" checks="JavadocMethod" />
+    <suppress files="EventModule.java" checks="JavadocMethod" />
+    <suppress files="ShapeGenerationModule.java" checks="JavadocMethod" />
+    <suppress files="ShapeIdentificationModule.java" checks="JavadocMethod" />
+</suppressions>

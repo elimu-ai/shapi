@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <fr.tvbarthel.apps.shapi.shape.ShapeView
+        android:id="@+id/activity_test_shape_view_1"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="#cccccc"
+        android:padding="4dp" />
+
+    <fr.tvbarthel.apps.shapi.shape.ShapeView
+        android:id="@+id/activity_test_shape_view_2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="#cccccc"
+        android:padding="4dp" />
+
+    <fr.tvbarthel.apps.shapi.shape.ShapeView
+        android:id="@+id/activity_test_shape_view_3"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="#cccccc"
+        android:padding="4dp" />
+
+</LinearLayout>

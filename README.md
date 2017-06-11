@@ -3,8 +3,26 @@ Shapi
 
 This project aims to help children to learn and train shape identification.
 
-![screenshot_20170606-155156](https://cloud.githubusercontent.com/assets/15718174/26830082/f21886c8-4ac7-11e7-87bd-7a5bb7ac780f.png)
+![device-2017-06-11-111354](https://user-images.githubusercontent.com/4211470/27009805-9cbf2d02-4e97-11e7-94ed-ecb3b1f3420b.png)
 
+Sound Effects
+======
+Some of the sounds in this project were created by David McKee (ViRiX)
+soundcloud.com/virix
+
+Assets
+======
+Freebies assets from craftpix.net, modified and distributed according to the licence:
+
+FREEBIE PRODUCTS
+
+You are permitted to use the resources in any number of personal and commercial projects for yourself or a client.
+You can modify the resources according to your requirements and include them into works such as websites, applications, printed materials and others;
+You can sell and distribute games with our assets.
+
+    https://craftpix.net/file-licenses/
+
+No attribution or link back to this site is required, however any credit will be much appreciated.
 
 License
 =====================

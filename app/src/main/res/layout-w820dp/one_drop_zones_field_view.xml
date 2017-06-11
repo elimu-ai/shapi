@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/field_view_drag_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <fr.tvbarthel.apps.shapi.game.DropZoneView
+        android:id="@+id/field_view_drop_zone_1"
+        android:layout_width="@dimen/drop_zone_box_width"
+        android:layout_height="@dimen/drop_zone_box_height"
+        android:layout_gravity="center_vertical|end"
+        android:padding="@dimen/drop_zone_padding"
+        android:background="?selectableItemBackground" />
+
+</merge>
