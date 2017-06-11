@@ -36,7 +36,7 @@ public interface GameContract {
          * Must initialize the game engine at start spawning shape.
          * <p>
          * See also:
-         * {@link View#displayField(Field)}
+         * {@link View#displayField(Field, boolean)}
          * {@link View#displayShape(Shape, boolean)}
          */
         void start();
@@ -89,9 +89,10 @@ public interface GameContract {
         /**
          * Called when the game field must be displayed to the user.
          *
-         * @param field game field to display.
+         * @param field    game field to display.
+         * @param animated True if the changes should be animated, false otherwise.
          */
-        void displayField(Field field);
+        void displayField(Field field, boolean animated);
 
         /**
          * Called when a new shape has just spawned and must be displayed to the user.

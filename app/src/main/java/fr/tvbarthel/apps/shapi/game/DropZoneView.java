@@ -81,11 +81,29 @@ public class DropZoneView extends FrameLayout {
      * Set the {@link DropZone} that should be represented
      *
      * @param dropZone a {@link DropZone}
+     * @param animated True if the changes should be animated, false otherwise.
      */
-    public void setDropZone(DropZone dropZone) {
+    public void setDropZone(DropZone dropZone, boolean animated) {
         this.dropZone = dropZone;
         final Shape shapeForDropZone = getShapeForDropZone(dropZone);
-        shapeView.setShape(shapeForDropZone);
+        if (!animated) {
+            shapeView.setShape(shapeForDropZone);
+        } else {
+            shapeView.animate()
+                    .scaleX(0f)
+                    .scaleY(0f)
+                    .withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            shapeView.setShape(shapeForDropZone);
+                            shapeView.animate()
+                                    .scaleX(1f)
+                                    .scaleY(1f)
+                                    .start();
+                        }
+                    }).start();
+        }
+
         //noinspection unchecked
         dragHelper.register(DropZoneView.this, dragListener, new ArrayList<Class<?>>(dropZone.getAvailableShapes()));
     }

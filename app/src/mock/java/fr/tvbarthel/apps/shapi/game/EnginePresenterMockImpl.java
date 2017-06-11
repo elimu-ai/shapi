@@ -115,7 +115,7 @@ class EnginePresenterMockImpl implements GameContract.Presenter {
 
     private void initializeField() {
         if (view != null) {
-            view.displayField(gameField);
+            view.displayField(gameField, false);
         }
     }
 
