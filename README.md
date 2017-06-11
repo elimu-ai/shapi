@@ -3,6 +3,8 @@ Shapi
 
 This project aims to help children to learn and train shape identification.
 
+![screenshot_20170606-155156](https://cloud.githubusercontent.com/assets/15718174/26830082/f21886c8-4ac7-11e7-87bd-7a5bb7ac780f.png)
+
 Sound Effects
 ======
 Some of the sounds in this project were created by David McKee (ViRiX)
