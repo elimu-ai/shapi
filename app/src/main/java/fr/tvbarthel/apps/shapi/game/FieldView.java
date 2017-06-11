@@ -1,9 +1,11 @@
 package fr.tvbarthel.apps.shapi.game;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +42,10 @@ public class FieldView extends FrameLayout {
     private int dropAnimationDuration;
     private Animation dropSuccessAnimation;
     private Animation dropFailureAnimation;
+    private ValueAnimator backgroundSuccessAnimator;
+    private ValueAnimator backgroundFailureAnimator;
     private DropZoneView droppedZone;
+    private ValueAnimator.AnimatorUpdateListener backgroundUpdateListener;
 
     /**
      * View used to render the game field to the user.
@@ -102,6 +107,7 @@ public class FieldView extends FrameLayout {
      * @return animation started, can be used to register a listener.
      */
     public Animation startSuccessAnimation() {
+        backgroundSuccessAnimator.start();
         droppedZone.startAnimation(dropSuccessAnimation);
         return dropSuccessAnimation;
     }
@@ -112,6 +118,7 @@ public class FieldView extends FrameLayout {
      * @return animation started, can be used to register a listener.
      */
     public Animation startFailureAnimation() {
+        backgroundFailureAnimator.start();
         droppedZone.startAnimation(dropFailureAnimation);
         return dropFailureAnimation;
     }
@@ -125,7 +132,22 @@ public class FieldView extends FrameLayout {
         dropAnimationDuration = context.getResources().getInteger(R.integer.drop_animation_duration);
 
         initializeInternalListeners();
+
+        int neutralBackgroundColor = ContextCompat.getColor(context, R.color.colorBackground);
+        int successBackgroundColor = ContextCompat.getColor(context, R.color.colorBackgroundSuccess);
+        int failureBackgroundColor = ContextCompat.getColor(context, R.color.colorBackgroundFailure);
+
+        backgroundSuccessAnimator = initializeBackgroundAnimator(neutralBackgroundColor, successBackgroundColor);
+        backgroundFailureAnimator = initializeBackgroundAnimator(neutralBackgroundColor, failureBackgroundColor);
+
         dragHelper = DragHelper.getInstance();
+    }
+
+    private ValueAnimator initializeBackgroundAnimator(int srcColor, int destColor) {
+        ValueAnimator valueAnimator = ValueAnimator.ofArgb(srcColor, destColor, destColor, srcColor);
+        valueAnimator.setDuration(dropAnimationDuration);
+        valueAnimator.addUpdateListener(backgroundUpdateListener);
+        return valueAnimator;
     }
 
     private void initializeInternalListeners() {
@@ -160,6 +182,12 @@ public class FieldView extends FrameLayout {
             protected void onDragEnded(View source, Object data) {
                 super.onDragEnded(source, data);
                 source.setVisibility(VISIBLE);
+            }
+        };
+        backgroundUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                setBackgroundColor(((Integer) animation.getAnimatedValue()));
             }
         };
     }
