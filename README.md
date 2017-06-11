@@ -8,6 +8,20 @@ Sound Effects
 Some of the sounds in this project were created by David McKee (ViRiX)
 soundcloud.com/virix
 
+Assets
+======
+Freebies assets from craftpix.net, modified and distributed according to the licence:
+
+FREEBIE PRODUCTS
+
+You are permitted to use the resources in any number of personal and commercial projects for yourself or a client.
+You can modify the resources according to your requirements and include them into works such as websites, applications, printed materials and others;
+You can sell and distribute games with our assets.
+
+    https://craftpix.net/file-licenses/
+
+No attribution or link back to this site is required, however any credit will be much appreciated.
+
 License
 =====================
 Copyright (C) 2017 tvbarthel
