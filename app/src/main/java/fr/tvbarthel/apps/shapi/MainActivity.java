@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void displayField(Field field) {
-        fieldView.setField(field);
+    public void displayField(Field field, boolean animated) {
+        fieldView.setField(field, animated);
     }
 
     @Override
@@ -137,10 +137,22 @@ public class MainActivity extends AppCompatActivity
         shapeView.hide();
     }
 
-    private void showShape(Shape shape) {
+    private void showShape(final Shape shape) {
         playedShape = shape;
-        shapeView.show();
-        shapeView.setShape(shape);
+        shapeView.animate()
+                .scaleX(0f)
+                .scaleY(0f)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        shapeView.show();
+                        shapeView.setShape(shape);
+                        shapeView.animate()
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .start();
+                    }
+                }).start();
     }
 
 }

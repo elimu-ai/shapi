@@ -78,12 +78,13 @@ public class FieldView extends FrameLayout {
     /**
      * Set the field to display to the user.
      *
-     * @param field field to display.
+     * @param field    field to display.
+     * @param animated True if the changes should be animated, false otherwise.
      */
-    public void setField(@NonNull Field field) {
+    public void setField(@NonNull Field field, boolean animated) {
         //noinspection unchecked
         updateFieldLayout(field);
-        displayDropZones(field.getZones());
+        displayDropZones(field.getZones(), animated);
         dragHelper.register(dragMask, dragListener, new ArrayList<Class<?>>(field.getAvailableShapes()));
     }
 
@@ -224,17 +225,17 @@ public class FieldView extends FrameLayout {
         }
     }
 
-    private void displayDropZones(List<DropZone> zones) {
+    private void displayDropZones(List<DropZone> zones, boolean animated) {
         if (zones.size() == 1) {
-            dropZone1.setDropZone(zones.get(0));
+            dropZone1.setDropZone(zones.get(0), animated);
         } else if (zones.size() == 2) {
-            dropZone1.setDropZone(zones.get(0));
-            dropZone2.setDropZone(zones.get(1));
+            dropZone1.setDropZone(zones.get(0), animated);
+            dropZone2.setDropZone(zones.get(1), animated);
         } else if (zones.size() == 4) {
-            dropZone1.setDropZone(zones.get(0));
-            dropZone2.setDropZone(zones.get(1));
-            dropZone3.setDropZone(zones.get(2));
-            dropZone4.setDropZone(zones.get(3));
+            dropZone1.setDropZone(zones.get(0), animated);
+            dropZone2.setDropZone(zones.get(1), animated);
+            dropZone3.setDropZone(zones.get(2), animated);
+            dropZone4.setDropZone(zones.get(3), animated);
         }
     }
 

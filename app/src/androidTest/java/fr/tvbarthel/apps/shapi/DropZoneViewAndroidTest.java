@@ -92,7 +92,7 @@ public class DropZoneViewAndroidTest {
         instrumentation.runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                dropZoneView.setDropZone(dropZone);
+                dropZoneView.setDropZone(dropZone, false);
             }
         });
     }

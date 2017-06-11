@@ -9,6 +9,7 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
 
     private final GameEngine gameEngine;
     private GameContract.View view;
+    private boolean lastAnswerCorrect;
 
     /**
      * Create an {@link EnginePresenterKidImpl}
@@ -33,7 +34,7 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
 
     @Override
     public void start() {
-        showDropZones();
+        showDropZones(false);
         showCurrentScore();
         showCurrentShapeToIdentify();
     }
@@ -45,15 +46,15 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
 
     @Override
     public void computeScore(DropZone zone, Shape shape) {
-        boolean correct = gameEngine.identifyCurrentShape(zone.getShape());
-        showAnswer(correct);
+        lastAnswerCorrect = gameEngine.identifyCurrentShape(zone.getShape());
+        showAnswer(lastAnswerCorrect);
         showCurrentScore();
     }
 
     @Override
     public void nextRound() {
         showCurrentShapeToIdentify();
-        showDropZones();
+        showDropZones(lastAnswerCorrect);
     }
 
     @Override
@@ -70,8 +71,8 @@ class EnginePresenterKidImpl implements GameContract.Presenter {
         view.displayScore(currentScore.getNumberOfCorrectAnswers(), currentScore.getNumberOfIncorrectAnswers());
     }
 
-    private void showDropZones() {
-        view.displayField(gameEngine.getCurrentField());
+    private void showDropZones(boolean animated) {
+        view.displayField(gameEngine.getCurrentField(), animated);
     }
 
     private void showAnswer(boolean correct) {
