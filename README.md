@@ -5,6 +5,10 @@ This project aims to help children to learn and train shape identification.
 
 ![device-2017-06-11-111354](https://user-images.githubusercontent.com/4211470/27009805-9cbf2d02-4e97-11e7-94ed-ecb3b1f3420b.png)
 
+![scr_20170620_152914_512](https://user-images.githubusercontent.com/15718174/27333603-b6093dee-55c6-11e7-9754-c2d5503f0730.gif)
+
+See demo at https://www.youtube.com/watch?v=n3fofo3iedQ
+
 Sound Effects
 ======
 Some of the sounds in this project were created by David McKee (ViRiX)
