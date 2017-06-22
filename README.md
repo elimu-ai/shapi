@@ -7,7 +7,7 @@ This project aims to help children to learn and train shape identification.
 
 ![scr_20170620_152914_512](https://user-images.githubusercontent.com/15718174/27333603-b6093dee-55c6-11e7-9754-c2d5503f0730.gif)
 
-See demo at https://www.youtube.com/watch?v=n3fofo3iedQ
+See demo at https://www.youtube.com/watch?v=lQrvTPDkbzI
 
 Sound Effects
 ======
