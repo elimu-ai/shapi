@@ -10,8 +10,8 @@ android {
         applicationId "fr.tvbarthel.apps.shapi"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1000000
-        versionName "1.0.0"
+        versionCode 1000001
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
